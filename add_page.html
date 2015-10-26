@@ -82,6 +82,11 @@
 				white-space: nowrap;
 			}
 		</style>
+		<script>
+			function back() {
+				window.location.assign("habit_list.html");
+			}
+		</script>
 	</head>
 	<body>
 		<div id="container">
@@ -89,7 +94,7 @@
 				<span class="glyphicon glyphicon-remove-sign"></span> 
 			</button><br>
 	    	<h2>Add a habit</h2>
-			<form>
+			<form onsubmit="back(); return false;">
 				<div>
 					<label>Habit Title:</label><br>
 					<input id="habit_name" type="text"><br>
