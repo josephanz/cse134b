@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>The list page</title>
+	<style type="text/css">
+		html { 
+			background: url(images/white_background.jpg) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+		.img-circle {
+    		border-radius: 50%;
+    		width:100px;
+    		border:3px solid #000;
+    		margin-left: 5px;
+		}
+
+
+		.btn-toolbar{
+			position: relative;
+		    display: inline-block;
+		    vertical-align: middle;
+		}
+
+		.progressTab{
+			position: relative;
+		    display: inline-block;
+		  	vertical-align: middle;
+		}
+		progress{
+			display: block;
+		}
+
+		p.userCount{
+			display:inline;
+			float:left;
+		}
+
+		p.totalCount{
+			float:right;
+		}
+
+		section{
+			height:161px;
+			margin-top: 1%;
+			margin-right: 1%;
+			float: left;
+			border: 1px solid #ccc;
+			display: inline;
+			width: 345px;
+			padding-bottom: 10px; 
+		}
+		.badge{
+			float:right;
+			margin-right: 5%;
+		}
+		section > h4{
+			/*text-align: center;*/
+			margin-left: 5px;
+		}
+
+		#main{
+			margin-left: 7%;
+
+
+		}
+		.addButton{
+			text-align:center;
+
+		}
+
+	</style>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+
+
+</head>
+<body>
+
+	
+	<div id="main">	
+		<div class="addButton">
+			<button type="button" class="btn btn-default" id="button-Add-1">
+	    		<span class="glyphicon glyphicon-plus-sign"></span> Add New Habit
+			</button>
+		</div>	
+		<div>
+			<section>
+				<h4>Spend Less Money $$$$$ <span class="badge">1/1</span></h4>
+				<img class="img-circle" src="images/piggybank.jpg" alt="piggybank">
+				<div class="btn-toolbar">
+					<button type="button" class="btn btn-default" id="button-Like-1">
+		          		<span class="glyphicon glyphicon-thumbs-up"></span> Accomplished
+		        	</button>
+
+					<button type="button" class="btn btn-default" id="button-Dislike-1">
+		          		<span class="glyphicon glyphicon-thumbs-down"></span> Failed
+		        	</button>
+				</div>	
+				<div id="asdf-1" class="progressTab" style="display:none;">
+					<h2>85% <span></span></h2>
+					<progress value="22" max="100" style="display:block;"></progress>
+					<p class="userCount">22 in row</p><p class="totalCount">best=100</p>
+				</div>
+				<div id="editRemove-1" style="display:none;">
+					<button type="button" class="btn btn-default" id="button-Edit-1">
+		          		<span class="glyphicon glyphicon-pencil"></span> 
+		        	</button>
+					<button type="button" class="btn btn-default" id="button-Remove-1">
+		          		<span class="glyphicon glyphicon-trash"></span> 
+		        	</button>
+				</div>
+			</section>
+
+			
+
+			<section>
+				<h4>Sleep 8 hours <span class="badge">2/3</span></h4>
+				<img class="img-circle" src="images/numbers.jpg" alt="numbers">
+				<div class="btn-toolbar">
+					<button type="button" class="btn btn-default" id="button-Like-2">
+		          		<span class="glyphicon glyphicon-thumbs-up"></span> Accomplished
+		        	</button>
+
+					<button type="button" class="btn btn-default" id="button-Dislike-2">
+		          		<span class="glyphicon glyphicon-thumbs-down"></span> Failed
+		        	</button>
+				</div>	
+				<div id="asdf-2" class="progressTab" style="display:none;">
+					<h2>85% <span></span></h2>
+					<progress value="22" max="100" style="display:block;"></progress>
+					<p class="userCount">22 in row</p><p class="totalCount">worst=88</p>
+				</div>
+				<div id="editRemove-2" style="display:none;">
+					<button type="button" class="btn btn-default" id="button-Edit-2">
+		          		<span class="glyphicon glyphicon-pencil"></span> 
+		        	</button>
+					<button type="button" class="btn btn-default" id="button-Remove-2">
+		          		<span class="glyphicon glyphicon-trash"></span> 
+		        	</button>
+				</div>
+			</section>
+			<section>
+				<h4>Workout More <span class="badge">3/3</span></h4>
+				<img class="img-circle" src="images/gains.png" alt="the gains">
+				<div class="btn-toolbar">
+					<button type="button" class="btn btn-default" id="button-Like-3">
+		          		<span class="glyphicon glyphicon-thumbs-up"></span> Accomplished
+		        	</button>
+
+					<button type="button" class="btn btn-default" id="button-Dislike-3">
+		          		<span class="glyphicon glyphicon-thumbs-down"></span> Failed
+		        	</button>
+				</div>	
+				<div id="asdf-3" class="progressTab" style="display:none;">
+					<h2>85% <span></span></h2>
+					<progress value="22" max="100" style="display:block;"></progress>
+					<p class="userCount">22 in row</p><p class="totalCount">worst=88</p>
+				</div>
+				<div id="editRemove-3" style="display:none;">
+					<button type="button" class="btn btn-default" id="button-Edit-3">
+		          		<span class="glyphicon glyphicon-pencil"></span> 
+		        	</button>
+					<button type="button" class="btn btn-default" id="button-Remove-3">
+		          		<span class="glyphicon glyphicon-trash"></span> 
+		        	</button>
+				</div>
+			</section>
+		</div>
+
+</div>
+
+
+
+
+<script>
+	var count = 4;
+	$( "button" ).click(function() {
+  		var btnId = $(this).attr("id");
+  		var idNum = btnId.split("-")[2];
+  		var buttonType = btnId.split("-")[1];
+  		if(buttonType === "Add"){
+  			window.location.assign("add_page.html");
+  		}
+  		else if(buttonType === "Like"){
+  			$("#"+ btnId).parent().hide();
+			$("#asdf-"+idNum).show();
+			$("#asdf-"+idNum).children("h2").children("span").attr("class", "glyphicon glyphicon-thumbs-up");
+			$("#editRemove-"+idNum).show().css("display","inline");
+
+  		}
+  		else if(buttonType === "Dislike"){
+  			$("#"+ btnId).parent().hide();
+			$("#asdf-"+idNum).show();
+			$("#asdf-"+idNum).children("h2").children("span").attr("class", "glyphicon glyphicon-thumbs-down");
+			$("#editRemove-"+idNum).show().css("display","inline");
+
+  		}
+  		else if(buttonType === "Edit"){
+  			window.location.assign("edit_page.html");
+  		}	
+  		else if(buttonType === "Remove"){
+  			$("#"+btnId).parent().parent().remove();
+  		}
+
+	});
+
+
+
+</script>	
+
+
+
+</body>
+</html>

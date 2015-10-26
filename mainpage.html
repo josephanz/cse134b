@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <title>virtue/vice</title>
+    <style>
+       
+		html { 
+			background: url(images/white_background.jpg) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+		}
+		@media (orientation: portrait) {
+			body{
+				position: absolute;
+				background-color: transparent;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				width: 90%;
+				height: 30%;
+				margin: auto;
+				
+			}	
+		}
+		@media (orientation: landscape) {
+			body{
+				position: absolute;
+				background-color: transparent;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				width: 90%;
+				height: 73%;
+				margin: auto;
+			}
+		}		
+        .hrText {
+            background-color: transparent;
+            display: block;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap; 
+            font-size: 3vmax;
+        }
+		button {
+			cursor: pointer;
+		}
+        .hrText > span {
+            position: relative;
+            display: inline-block;
+        }   
+        .hrText > span:before,
+        .hrText > span:after {
+            content: "";
+            border-top:solid 2px black;
+            position: absolute;
+            top: 50%;
+            width: 90%;
+            height: 2px;
+            background: #333333;
+        }
+        .hrText > span:before {
+            right: 100%;
+            margin-right: 15px;
+        }
+
+        .hrText > span:after {
+            left: 100%;
+            margin-left: 15px;
+        } 
+
+
+        h4 > span:before,
+        h4 > span:after{
+            content:"";
+            top:50%;
+            left:0;
+            right:0;
+            border-top:solid 2px black;
+            z-index:-1;
+        }
+
+         h1{
+            margin-top:10%;
+            top: 50%;
+            left: 30%;
+            right: 30%;
+        }
+		a:link, a:visited, a:hover, a:active {
+			color: black;
+			text-decoration: none;
+		}		
+    }
+
+    </style>
+</head>
+<body>
+    <section id="header">
+        <h1 style=" font-size: 15vw; text-align: center; background-color: transparent;">virtue / vice</h1>
+        <div class="hrText">
+            <span style="font-size: 3vw;">keep your habits in line</span>
+        </div>
+    </section>
+	<br>
+    <section>
+        <div style="text-align: center;">
+            <button id="addbtn" class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus-sign"><span style=
+            "font-family: Helvetica Neue,Helvetica,Arial,sans-serif"><a href="add_page.html"> &nbsp;add a habit</a></span></span></button>
+        </div>
+    </section>
+	<script>
+		$("button").click(function() {
+				window.location.assign("add_page.html");
+		})
+		
+	</script>
+</body>
+</html>
