@@ -7,19 +7,21 @@ html {
 
 body {
   font-family: 'Helvetica', sans-serif;
-  background: -webkit-linear-gradient(left top, #BBDEFB, #B0C4DE) fixed; /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right,#BBDEFB, #B0C4DE) fixed; /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, #BBDEFB, #B0C4DE) fixed ; /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right,  #BBDEFB, #B0C4DE) fixed; /* Standard syntax */
+  background: -webkit-linear-gradient(left top, #dddddd, #aaaaaa) fixed; /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right,#dddddd, #aaaaaa) fixed; /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #dddddd, #aaaaaa) fixed ; /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right,  #dddddd, #aaaaaa) fixed; /* Standard syntax */
+  background-color: black;x
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
 }
-p{
-	color:#6c6c6c;
-	font-size: medium;
+
+.titleH {
+	font-size: 17pt;
 }	
+
 div.forms {
 	position: relative;
 	margin: 0 auto;
@@ -29,10 +31,25 @@ div.forms {
 	border-radius: 25px;
 	bottom: auto;
 }
+
+input[type="file"] {
+	display: none;
+	opacity: 0;
+	width: 80px;
+	height: 80px;
+}
+
+#icon4 {
+	border: 2px solid transparent;
+	width: 80px;
+	height: 80px;
+}
+
 input#title{
 	height: 30px;
 	width: 350px;
 	font-size:medium;
+	padding-left: 5px;
 
 }
 input#others{
@@ -43,12 +60,13 @@ input#others{
 img.icon{
 	width: 80px;
 	height: 80px;
-	margin-right: 20px;
+	margin-right: 10px;
 	border-radius: 25px;
+	border: 3px inset rgba(0,0,0,0);
 	-webkit-transform: scale(1);
 	transform: scale(1);
-	-webkit-transition: .3s ease-in-out;
-	transition: .3s ease-in-out;
+	-webkit-transition: .15s ease-in-out;
+	transition: .15s ease-in-out;
 }
 @media (max-width: 500px) {
   div.forms {
@@ -75,6 +93,7 @@ img.icon{
 	height: 60px;
 	margin-right: 10px;
 	border-radius: 15px;
+	padding: 4px;
 	-webkit-transform: scale(1);
 	transform: scale(1);
 	-webkit-transition: .3s ease-in-out;
@@ -90,21 +109,21 @@ img.icon{
 
 h2{
 	text-align:center;
-	background-color: #bdbdbd;
+	background-color: #333333;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	border-top-right-radius: 20px;
 	border-top-left-radius: 20px;
 
-	color:white;
+	color: white;
 	text-shadow: 0px 0px 0px black;
 }
 
 
 
 img.icon:hover{
-	-webkit-transform: scale(1.3);
-	transform: scale(1.3);
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
 	cursor: pointer;
 }
 span#others_text{
@@ -115,17 +134,17 @@ span#others_text{
 
 input#save{
 	-webkit-appearance:none;
-	width: 49%;
+	width: 25%;
 	display: inline-block;
 	margin: 0;
 	padding: 15px;
 	background: none;
 	border: none;
 	color: white;
-	background-color: #48BA87;
-	-webkit-border-radius: 5px; /*For Safari, etc. */
-	-moz-border-radius: 5px; /* For Mozilla, etc. */
-	border-radius: 5px; /* CSS3 Feature */	
+	background-color: #777777;
+	-webkit-border-radius: 15px; /*For Safari, etc. */
+	-moz-border-radius: 15px; /* For Mozilla, etc. */
+	border-radius: 15px; /* CSS3 Feature */	
 	opacity: 1.0;
 	font-size: medium;
 	-webkit-box-sizing: border-box;
@@ -153,16 +172,19 @@ div label input {
 
 #ck-button label {
     margin:4px;
-    border-radius:5px;
-	/*border:1px solid #D0D0D0;*/
+    border-radius:25px;
+	border:1px solid #D0D0D0;
     background-color:#EFEFEF;
     float:left;
-    width:4.0em;
+    width:10%;
+    font-size: 13pt;
+    /*height: 30px;*/
 }
 
 #ck-button label span {
     text-align:center;
     padding:3px 0px;
+    /*padding-top: 6px;*/
     display:block;
     /*border:1px solid #D0D0D0;*/
     overflow:auto;
@@ -176,7 +198,7 @@ div label input {
 
 #ck-button input:checked + span {
     background-color:#9c9696; 
-    border-radius:5px;
+    border-radius:25px;
     color:#fff;
 }
 #ck-button input:hover + span {
@@ -193,7 +215,9 @@ div label input {
     background-color:#EFEFEF;
     float:left;
     width:2.0em;
+    border: 1px solid #D0D0D0;
 }
+
 
 span#times{
 	margin: 4px;
