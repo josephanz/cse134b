@@ -1,5 +1,5 @@
 
-
+Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
 
 function validateLogin() {
@@ -20,7 +20,7 @@ function validateLogin() {
 function validateSignup() {
     var usermail = document.getElementById("usermail").value;
     var password = document.getElementById("password").value;
-    
+
     if( usermail == null || usermail == ""){
         alert("User email must be filled out");
         return false;
@@ -30,36 +30,57 @@ function validateSignup() {
         return false;
     }
     return true;
-    
+
 }
 function onClickLogin() {
     var usermail = document.getElementById("usermail").value;
     var password = document.getElementById("password").value;
-    
-    if( validateLogin() == true ){
-        if(usermail == sessionStorage.getItem("usermail") && password == sessionStorage.getItem("password")){
-            alert("login success");
-            return true;
-        }
-        else{
-            alert("incorrect login information");
-            return false;
-        }
-    }
-    return false;
+
+    if( validateLogin() === true ){
+      login(usermail, password);
+  }
+
 }
 
 
 function onClickSignUp() {
     var usermail = document.getElementById("usermail").value;
     var password = document.getElementById("password").value;
-    if( validateSignup() == true ){
-        sessionStorage.setItem("usermail", usermail);
-        sessionStorage.setItem("password", password);
-        
-        var signUpText = document.getElementById("signInMessage");
-        signUpText.style.display = "block";
+    if( validateSignup() === true ){
+        signUp(usermail, password);
     }
     else{return false;}
-  
+
+}
+
+function signUp(email, password) {
+  var user = new Parse.User();
+  user.set("username", email);
+  user.set("password", password);
+  user.set("email", email);
+
+  user.setACL(new Parse.ACL());
+  user.signUp(null, {
+    success: function(user) {
+      alert("Hooray! Let them use the app now.");
+    },
+    error: function(user, error) {
+      // Show the error message somewhere and let the user try again.
+      alert("Error: " + error.code + " " + error.message);
+    }
+  });
+}
+
+function login(username, password) {
+  Parse.User.logIn(username, password, {
+    success: function(user) {
+      //alert("Hooray! Let them use the app now.");
+      window.location = ("../src/welcome.html");
+
+    },
+    error: function(user, error) {
+      alert(error);
+
+    }
+  });
 }
