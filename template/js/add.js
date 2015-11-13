@@ -19,7 +19,7 @@ function selectImage(name) {
 
 var visible = true;
 function toggle() {
-	var timeField = document.getElementById("time_field");
+	var timeField = document.getElementById("time_selector");
 	if(visible) {
 		timeField.style.visibility = "hidden";
 		console.log("hi");
