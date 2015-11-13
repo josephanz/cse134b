@@ -5,6 +5,53 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Edit a habit</title>
 		<link rel="stylesheet" href="../css/forms.css">
+		<style>
+		    .onoffswitch {
+    position: relative; width: 90px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    }
+    .onoffswitch-checkbox {
+    display: none;
+    }
+    .onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+    }
+    .onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+    }
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+    }
+    .onoffswitch-inner:before {
+    content: "ON";
+    padding-left: 10px;
+    background-color: #465154; color: #FFFFFF;
+    }
+    .onoffswitch-inner:after {
+    content: "OFF";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+    }
+    .onoffswitch-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 56px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+    }
+		</style>
 	</head>
 	<body>
 		<script>
@@ -44,6 +91,20 @@
 					<span id="times">times</span>
 				</div>
 				<p><label><span id="others_text">Others: </span><input id="others" type="text" name="day" placeholder="More than 3 times"></label></p>
+				
+				<p><label>Notifications</label></p> 
+				    <div class="onoffswitch" style="margin-left:0%; float:left">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked onclick="toggle()">
+						<label class="onoffswitch-label" for="myonoffswitch">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div> 
+					<div id="time_field" style="margin-left:10%;float:left">
+						<label>Time:</label>
+						<input type="time">
+					</div>
+					<br>
 				<p id="save_p"><input id="save" type="button" value="Save It" onclick="location.href='list.html'"></p>
 				
 			</form>
@@ -57,6 +118,19 @@
 				document.getElementById('icon3').style.border = "none";
 				var image = document.getElementById(name);
 				image.style.border = "5px solid #42A5F5";
+			}
+			
+			var visible = true;
+			function toggle() {
+				var timeField = document.getElementById("time_field");
+				if(visible) {
+					timeField.style.visibility = "hidden";
+					console.log("hi");
+				} else {
+					timeField.style.visibility = "visible";
+					console.log("bye");
+				}
+				visible = !visible;
 			}
 		</script>
 	</body>

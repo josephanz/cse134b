@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+	<head>
+		<title>test</title>
+		<script src="libs/notification/notification.js"></script>
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script>
+			function sendNotification(title, notiBody, notiIcon) {
+				if(Notification.permission !== 'granted') {
+					Notification.requestPermission();
+				}
+				var n  = new Notification(title, {
+					body: notiBody,
+					icon: notiIcon
+				});
+				
+				if(window.external && window.external.msIsSiteMode() !== undefined) {
+					if(window.external.msIsSiteMode()) {
+						createPopUp(title, notiBody, notiIcon);
+					} else {
+						createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
+					}
+				}
+			}
+			
+			function show() {
+				sendNotification("this is a test", "this is a test", "images/url.jpg");
+			}
+			
+			function createPopUp(title, notiBody, notiIcon) {
+				var popup = document.createElement("div");
+				popup.innerHTML = "<strong>" + title + "</strong>" + "<br>" + notiBody;
+				popup.className = 'popup';
+				popup.style.display = 'none';
+				popup.onclick = function() {
+					$('.popup').fadeOut(400);
+				}
+				document.body.appendChild(popup);
+				$('.popup').fadeIn(400);
+			}
+			
+		</script>
+		<style>
+			.popup {
+				width:200px;
+				height:20px;
+				height:auto;
+				position:absolute;
+				left:90%;
+				margin-left:-100px;
+				bottom:10px;
+				background-color: #383838;
+				color: #F0F0F0;
+				font-family: Calibri;
+				font-size: 20px;
+				padding:10px;
+				text-align:center;
+				border-radius: 2px;
+				-webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+				-moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+				box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+			}
+		</style>
+	</head>
+	<body>
+		<button onclick="show()">Show</button>
+	</body>
+</html>
