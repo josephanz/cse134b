@@ -62,12 +62,13 @@ function saveIt() {
 	var habit = {
 		title: document.getElementById("title").value, 
 		weeklyFreq: perWeek,
-		dailyFreq:  perDay
+		dailyFreq:  perDay,
+		time: document.getElementById("time").value
 	};
 	
 
 	console.log(document.getElementById("title").value);
-	
+	console.log(document.getElementById("time").value);	
 	//document.location.href="list.html";
 }
 
