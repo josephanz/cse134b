@@ -83,6 +83,8 @@ $(function () {
 });
 
 function imageIsLoaded(e) {
-	$('#showhere').attr('style', "visiblility: visible;");
-    $('#showhere').attr('src', e.target.result);
+	$('#upload').remove();
+	$('#icon4').attr('style', "visiblility: visible;");
+	$('#icon4').attr('onclick', "selectImage('icon4')");
+    $('#icon4').attr('src', e.target.result);
 };
