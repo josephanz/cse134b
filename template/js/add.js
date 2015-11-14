@@ -59,16 +59,25 @@ function saveIt() {
 		console.log(perDay + "days baby");
 	}
 
+
+	var hour = document.getElementById("hour").value;
+	var ampm = document.getElementById("ampm").value;
+	if(document.getElementById("ampm").value == "PM")
+	{
+		hour = hour*1 + 12;
+	}
+	var min = document.getElementById("min").value;
+	
 	var habit = {
 		title: document.getElementById("title").value, 
 		weeklyFreq: perWeek,
-		dailyFreq:  perDay
+		dailyFreq:  perDay,
+		time: hour + ":" + min
 	};
-	
 
 	console.log(document.getElementById("title").value);
-	
-	//document.location.href="list.html";
+	console.log(habit.valueOf("time"));	
+	document.location.href="list.html";
 }
 
 $(function () {
@@ -81,7 +90,10 @@ $(function () {
     });
 });
 
+
 function imageIsLoaded(e) {
-	$('#showhere').attr('style', "visiblility: visible;");
-    $('#showhere').attr('src', e.target.result);
+	$('#upload').remove();
+	$('#icon4').attr('style', "visiblility: visible;");
+	$('#icon4').attr('onclick', "selectImage('icon4')");
+    $('#icon4').attr('src', e.target.result);
 };

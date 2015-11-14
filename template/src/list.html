@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../css/list.css">
 	<script src="../libs/notification/notification.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
 	<style>
 		.popup {
 			width:200px;
@@ -133,7 +135,7 @@
             var parent = child.parentNode;
             parent.removeChild(child);
         }
-		
+
 		function sendNotification(title, notiBody, notiIcon) {
 			if(Notification.permission !== 'granted') {
 				Notification.requestPermission();
@@ -142,7 +144,7 @@
 				body: notiBody,
 				icon: notiIcon
 			});
-			
+
 			if(window.external && window.external.msIsSiteMode() !== undefined) {
 				if(window.external.msIsSiteMode()) {
 					createPopUp(title, notiBody, notiIcon);
@@ -151,7 +153,7 @@
 				}
 			}
 		}
-		
+
 		function createPopUp(title, notiBody, notiIcon) {
 			var popup = document.createElement("div");
 			popup.innerHTML = "<strong>" + title + "</strong>" + "<br>" + notiBody;
@@ -164,6 +166,19 @@
 			$('.popup').fadeIn(400);
 		}
 
+		// function sendNotifications() {
+		// 	var i;
+        //  var notificationArray = getArray()
+
+        //  sort(notificationArray) //do by time
+		// 	for(i = 0; i < numberOfNotifications; i++) {
+		// 		var noti = notificationArray[i];
+		// 		window.setTimeout(function() {
+		// 			sendNotification(noti.title, noti.body, noti.icon);
+		// 		}, noti.time);
+		// 	}
+		// }
+
         function executeAt(hour, minute, func) {
             var currentHour  = new Date().getHours();
             var currentMin = new Date().getMinutes();
@@ -173,7 +188,7 @@
                 console.log("Time is in the past");
                 return false;
             }
-            var timeDiff = milisec - currentMilisec;
+            var timeDiff = hourDiff * 3600 * 1000 + minuteDiff * 60 * 1000;
             console.log("time diff " + timeDiff);
             setTimeout(func, timeDiff);
             return true;
