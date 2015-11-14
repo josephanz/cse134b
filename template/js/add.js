@@ -19,7 +19,7 @@ function selectImage(name) {
 
 var visible = true;
 function toggle() {
-	var timeField = document.getElementById("time_field");
+	var timeField = document.getElementById("time_selector");
 	if(visible) {
 		timeField.style.visibility = "hidden";
 		console.log("hi");
@@ -59,11 +59,20 @@ function saveIt() {
 		console.log(perDay + "days baby");
 	}
 
+
+	var hour = document.getElementById("hour").value;
+	var ampm = document.getElementById("ampm").value;
+	if(document.getElementById("ampm").value == PM)
+	{
+		hour = hour + 12;
+	}
+	var min = document.getElementById("min").value;
+	
 	var habit = {
 		title: document.getElementById("title").value, 
 		weeklyFreq: perWeek,
 		dailyFreq:  perDay,
-		time: document.getElementById("time").value
+		time: hour + ":" + min
 	};
 	
 
