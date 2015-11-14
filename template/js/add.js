@@ -74,11 +74,10 @@ function saveIt() {
 		dailyFreq:  perDay,
 		time: hour + ":" + min
 	};
-	
 
 	console.log(document.getElementById("title").value);
 	console.log(habit.valueOf("time"));	
-	//document.location.href="list.html";
+	document.location.href="list.html";
 }
 
 $(function () {
@@ -90,6 +89,7 @@ $(function () {
         }
     });
 });
+
 
 function imageIsLoaded(e) {
 	$('#upload').remove();
