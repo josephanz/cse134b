@@ -62,9 +62,9 @@ function saveIt() {
 
 	var hour = document.getElementById("hour").value;
 	var ampm = document.getElementById("ampm").value;
-	if(document.getElementById("ampm").value == PM)
+	if(document.getElementById("ampm").value == "PM")
 	{
-		hour = hour + 12;
+		hour = hour*1 + 12;
 	}
 	var min = document.getElementById("min").value;
 	
@@ -77,7 +77,7 @@ function saveIt() {
 	
 
 	console.log(document.getElementById("title").value);
-	console.log(document.getElementById("time").value);	
+	console.log(habit.valueOf("time"));	
 	//document.location.href="list.html";
 }
 
