@@ -28,7 +28,7 @@
 		}
 	</style>
 </head>
-<body>
+<body onload="onDocumentLoad();">
     <section>
         <h1>Habit List</h1>
         <ul id="habit-list">
@@ -163,47 +163,37 @@
 			document.body.appendChild(popup);
 			$('.popup').fadeIn(400);
 		}
-		
-		// function sendNotifications() {
-		// 	var i;
-        //  var notificationArray = getArray()
-
-        //  sort(notificationArray) //do by time
-		// 	for(i = 0; i < numberOfNotifications; i++) {
-		// 		var noti = notificationArray[i];
-		// 		window.setTimeout(function() {
-		// 			sendNotification(noti.title, noti.body, noti.icon);
-		// 		}, noti.time);
-		// 	}
-		// }
 
         function executeAt(hour, minute, func) {
             var currentHour  = new Date().getHours();
             var currentMin = new Date().getMinutes();
-            console.log(currentHour + " " + hour);
-            if(currentHour > hour || currentMin > minute) {
+            var milisec = hour * 3600 * 1000 + minute * 60 * 1000;
+            var currentMilisec = currentHour * 3600 * 1000 + currentMin * 60 * 1000;
+            if(currentMilisec > milisec) {
                 console.log("Time is in the past");
                 return false;
             }
-            var hourDiff = hour - currentHour;
-            var minuteDiff = minute - currentMin;
-            var timeDiff = hourDiff * 3600 * 1000 + minuteDiff * 60 * 1000; 
+            var timeDiff = milisec - currentMilisec;
             console.log("time diff " + timeDiff);
             setTimeout(func, timeDiff);
             return true;
         }
 
-        (function() {
+        function onDocumentLoad() {
             var i;
-            var a = 0;
-            var hour = 18;
-            var minute = 49;
-            for(i = 0; i < 10; i++) {
+            var hour = 21;
+            var minute = 50;
+            var index = 0;
+            var a = 0
+            var length = 10;
+            for(i = 0; i < length; i++) {
                 executeAt(hour, minute--, function(){
-                    console.log(i);
+                    //get time, and notification text, image
+                    sendNotification()
+                    console.log(a++);
                 });
             }
-        }());
+        }
 
     </script>
 </body>
