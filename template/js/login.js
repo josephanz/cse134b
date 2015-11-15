@@ -4,6 +4,11 @@ Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwy
 var errorText = document.getElementById("errorMessage");
 var signUpText = document.getElementById("signInMessage");
 
+//note: on every page, we need a function that checks which user is this. this can be done
+//through session but is unsafe but who the fuk cares.
+//If the user visits any page, we should check the session for a logged in user. 
+//The session info should contain: username and password
+
 function validateLogin() {
     var usermail = document.getElementById("usermail").value;
     var password = document.getElementById("password").value;
@@ -89,9 +94,7 @@ function signUp(email, password) {
 function login(username, password) {
   Parse.User.logIn(username, password, {
     success: function(user) {
-      //alert("Hooray! Let them use the app now.");
       window.location = ("../src/welcome.html");
-
     },
     error: function(user, error) {
         console.log(error.code);
