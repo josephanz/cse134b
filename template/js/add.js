@@ -64,8 +64,13 @@ function saveIt() {
 	var ampm = document.getElementById("ampm").value;
 	if(document.getElementById("ampm").value == "PM")
 	{
-		hour = hour*1 + 12;
+		if(hour !== 12) {}
+			hour = hour + 12;
+		}
+	} else if(hour == 12) {
+		hour = 0;
 	}
+
 	var min = document.getElementById("min").value;
 	
 	var habit = {
