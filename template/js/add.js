@@ -40,9 +40,12 @@ function toggle() {
 function saveIt() {
   var week = document.getElementsByName("date");
   var perWeek = [];
+  var checkedWeek = false;
+  var checkedDay = false;
   for (var i = 0; i < week.length; i++) {
     if (week[i].checked) {
       perWeek[i] = true;
+      checkedWeek = true;
     } else {
       perWeek[i] = false;
     }
@@ -54,16 +57,26 @@ function saveIt() {
   for (var i = 0; i < daily.length; i++) {
     if (daily[i].checked) {
       perDay = daily[i].value;
+      checkedDay = true;
     }
-    console.log(perDay + "days baby");
+    console.log(perDay + " days baby");
   }
 
 
   var hour = document.getElementById("hour").value;
   var ampm = document.getElementById("ampm").value;
   if (document.getElementById("ampm").value == "PM") {
-    hour = hour * 1 + 12;
+  	if(hour != 12)
+  	{
+    	hour = hour * 1 + 12;
+    }
+
   }
+  else if(hour == 12)
+  {
+  	hour = 0;
+  }
+
   var min = document.getElementById("min").value;
 
 
@@ -71,11 +84,19 @@ function saveIt() {
   var title = document.getElementById("title").value;
   var time = hour + ":" + min;
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
-
-
-  addHabit(title, perWeek, perDay, time);
-  console.log(document.getElementById("title").value);
-
+  if(!checkedWeek)
+  {
+  	alert("please select weekly frequency");
+  }
+  else if(!checkedDay)
+  {
+  	alert("please select daily frequency");
+  }
+  else 
+  {
+	  addHabit(title, perWeek, Number(perDay), time);
+	  console.log(document.getElementById("title").value);
+  }
   //document.location.href = "list.html";
 }
 
@@ -113,7 +134,7 @@ function addHabit(title, perWeek, perDay, notificationTime) {
   //if new image blah
   var parseImg = createImage();
   //  testObject.set("icon", navv.get("icon"));
-testObject.set("icon", parseImg);
+  testObject.set("icon", parseImg);
   testObject.set("user", Parse.User.current());
   testObject.setACL(new Parse.ACL(Parse.User.current()));
   testObject.save(null, {
