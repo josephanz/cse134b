@@ -119,7 +119,7 @@ testObject.set("icon", parseImg);
   testObject.save(null, {
     success: function(object) {
       $(".success").show();
-      alert("Successfully retrieved " + " scores.");
+      alert("Successfully stored" + object);
     },
     error: function(model, error) {
       $(".error").show();
