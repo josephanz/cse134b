@@ -5,9 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../css/list.css">
-	<script src="../libs/notification/notification.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+	<script src="../libs/notification.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+    <!--check if user logged in-->
+    <script>
+            Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
+            //below is non-debug version:
+            //if(Parse.User.current() == null){window.location = ("../src/login.html");}
+            //below is debug version:
+            var currentUser = Parse.User.current();
+            if(currentUser){
+                console.log("user is logged in as:");
+                var userinfo = JSON.stringify(currentUser);
+                console.log( eval ("(" + userinfo + ")"));
+            }
+            else{
+                window.location = ("../src/login.html");
+            }
+    </script>
 	<style>
 		.popup {
 			width:200px;
@@ -144,14 +161,17 @@
 				body: notiBody,
 				icon: notiIcon
 			});
-
-			if(window.external && window.external.msIsSiteMode() !== undefined) {
-				if(window.external.msIsSiteMode()) {
-					createPopUp(title, notiBody, notiIcon);
-				} else {
-					createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
-				}
-			}
+            try {
+    			if(window.external && window.external.msIsSiteMode() !== undefined) {
+    				if(window.external.msIsSiteMode()) {
+    					createPopUp(title, notiBody, notiIcon);
+    				} else {
+    					createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
+    				}
+    			}
+            } catch(ex) {
+                console.log("Site mode is not supported");
+            }
 		}
 
 		function createPopUp(title, notiBody, notiIcon) {
@@ -161,23 +181,13 @@
 			popup.style.display = 'none';
 			popup.onclick = function() {
 				$('.popup').fadeOut(400);
+                var element = document.getElementsByTag('body');
+                var child = document.getElementsByClassName('popup');
+                element.removeChild(child);
 			}
 			document.body.appendChild(popup);
 			$('.popup').fadeIn(400);
 		}
-
-		// function sendNotifications() {
-		// 	var i;
-        //  var notificationArray = getArray()
-
-        //  sort(notificationArray) //do by time
-		// 	for(i = 0; i < numberOfNotifications; i++) {
-		// 		var noti = notificationArray[i];
-		// 		window.setTimeout(function() {
-		// 			sendNotification(noti.title, noti.body, noti.icon);
-		// 		}, noti.time);
-		// 	}
-		// }
 
         function executeAt(hour, minute, func) {
             var currentHour  = new Date().getHours();
@@ -188,24 +198,35 @@
                 console.log("Time is in the past");
                 return false;
             }
-            var timeDiff = hourDiff * 3600 * 1000 + minuteDiff * 60 * 1000;
+            var timeDiff = milisec - currentMilisec;
             console.log("time diff " + timeDiff);
             setTimeout(func, timeDiff);
             return true;
         }
 
+        //set time out functions for notifications
         function onDocumentLoad() {
+            console.log("onDocumentLoad() called");
             var i;
+            var index = 0;
+            // var habitList = getHabitList();
+            // var length = habitList.length;
             var hour = 21;
             var minute = 50;
-            var index = 0;
-            var a = 0
             var length = 10;
             for(i = 0; i < length; i++) {
+                // var time = habitList[index].time;
+                // var hourMinute = time.split(":");
+                // var hour = Number(hourMinute[0]);
+                // var minute = Number(hourMinute[1]);
                 executeAt(hour, minute--, function(){
                     //get time, and notification text, image
-                    sendNotification()
-                    console.log(a++);
+                    // var title = habitList[index].habitName;
+                    // var body = "Have you " + title + " today?"
+                    // var icon = habitList[index].iconSource;
+                    // sendNotification(title, body, icon);
+                    sendNotification("test", "this is a test" + index++, "../img/sleep.jpg")
+                    // index++;
                 });
             }
         }
