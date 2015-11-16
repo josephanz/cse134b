@@ -71,21 +71,22 @@
     right: 0px;
     }
 		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	</head>
 	<body>
 		<script>
 			function onStart() {
-            	document.getElementById("icon3").style.border="5px solid #42A5F5";
+            	document.getElementById("icon2").style.border="3px inset #999999";
 
 			}
 			window.onload = onStart;
 		</script>
 		<div class="forms">
-			<h2>Edit A Habit</h2>
+			<h2>Edit Habit</h2>
 			<form>
-				<p><label><span id="title_text">Habit Title</span></label></p>
-				<p><input id="title" type="text" name="fullname" value="Exercise 30 minutes"></p>
-				<p><label>Habit Icon</label></p>
+				<p class="titleH">Habit Title</p>
+				<p><input id="title" type="text" name="habitname" placeholder="eg: exercise 30 minutes"></p>
+				<p class="titleH">Habit Icon</p>
 				<img id="icon1" class="icon" onclick="selectImage('icon1');" src="../img/sleep.jpg" alt="sleep image"/>
 				<img id="icon2" class="icon" onclick="selectImage('icon2');" src="../img/salad.jpg" alt="eat image"/>
 				<img id="icon3" class="icon" onclick="selectImage('icon3');" src="../img/run.jpg" alt="run image"/>
@@ -109,7 +110,7 @@
 					<label> <input type="checkbox" name="day" value="three" checked><span>3</span></label>
 					<span id="times">times</span>
 				</div>
-				<p><label><span id="others_text">Others: </span><input id="others" type="text" name="day" placeholder="More than 3 times"></label></p>
+
 				
 				<p><label>Notifications</label></p> 
 				    <div class="onoffswitch" style="margin-left:0%; float:left">
@@ -129,28 +130,9 @@
 			</form>
 
 		</div>
-		<script>
-			function selectImage(name) {
-				//Clear all the other effects
-				document.getElementById('icon1').style.border = "none";
-				document.getElementById('icon2').style.border = "none";
-				document.getElementById('icon3').style.border = "none";
-				var image = document.getElementById(name);
-				image.style.border = "5px solid #42A5F5";
-			}
-			
-			var visible = true;
-			function toggle() {
-				var timeField = document.getElementById("time_field");
-				if(visible) {
-					timeField.style.visibility = "hidden";
-					console.log("hi");
-				} else {
-					timeField.style.visibility = "visible";
-					console.log("bye");
-				}
-				visible = !visible;
-			}
+		<script type="text/javascript" src="../js/add.js"></script>
+
+
 		</script>
 	</body>
 </html>

@@ -6,23 +6,8 @@
 		<title>Add a Habit</title>
 		<link rel="stylesheet" href="../css/forms.css">
 		<script src="../libs/notification.js"></script>
-        <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
-        <!--check if user logged in-->
-        <script>
-            Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
-            //below is non-debug version:
-            //if(Parse.User.current() == null){window.location = ("../src/login.html");}
-            //below is debug version:
-            var currentUser = Parse.User.current();
-            if(currentUser){
-                console.log("user is logged in as:");
-                var userinfo = JSON.stringify(currentUser);
-                console.log( eval ("(" + userinfo + ")"));
-            }
-            else{
-                window.location = ("../src/login.html");
-            }
-        </script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
 		<style>
 		    .onoffswitch {
 		    position: relative; width: 90px;
@@ -80,6 +65,7 @@
 				<p><input id="title" type="text" name="habitname" placeholder="eg: exercise 30 minutes"></p>
 
 				<p class="titleH">Habit Icon</p>
+				  getItem: <input type="button" onclick="getIcons()" value="Get!"> <br/>
 				<img id="icon1" class="icon" onclick="selectImage('icon1');" src="../img/sleep.jpg" alt="sleep image"/>
 				<img id="icon2" class="icon" onclick="selectImage('icon2');" src="../img/okay.jpg" alt="eat image"/>
 				<img id="icon3" class="icon" onclick="selectImage('icon3');" src="../img/salad.jpg" alt="run image"/>
@@ -100,8 +86,8 @@
 					<label> <input type="checkbox" name="date" value="friday"><span>Fri</span></label>
 					<label> <input type="checkbox" name="date" value="saturday"><span>Sat</span></label>
 				</div>
-		
-		
+
+
 				<p class="titleH">Daily Frequency</p>
 				<div id="daily-button">
 					<label> <input type="radio" name="day" value="one"><span>1</span></label>
@@ -110,15 +96,15 @@
 					<span id="times">times</span>
 				</div>
 				<!-- <p><label><span id="others_text">Others: </span><input id="others" type="text" name="day" placeholder="More than 3 times"></label></p> -->
-		
-				<p><label>Notifications</label></p> 
+
+				<p><label>Notifications</label></p>
 				    <div class="onoffswitch" style="margin-left:0%; float:left">
 						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked onclick="toggle()">
 						<label class="onoffswitch-label" for="myonoffswitch">
 							<span class="onoffswitch-inner"></span>
 							<span class="onoffswitch-switch"></span>
 						</label>
-					</div> 
+					</div>
 					<div id="time_selector" style="margin-left:10%;float:left; line-height:2">
 						<select id="hour">
 							<option>1</option>
@@ -153,7 +139,7 @@
 					<br>
 
 				<p id="save_p"><input id="save" type="button" value="Save It" onclick="saveIt()"></p>
-				
+
 			</form>
 
 		</div>
