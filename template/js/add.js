@@ -94,8 +94,8 @@ function saveIt() {
   }
   else
   {
-  console.log(document.getElementById("title").value);
-		addHabit(title, perWeek,(perDay), time);
+
+	  addHabit(title, perWeek, Number(perDay), time);
 	  console.log(document.getElementById("title").value);
   }
   //document.location.href = "list.html";
