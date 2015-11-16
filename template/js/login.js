@@ -4,10 +4,6 @@ Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwy
 var errorText = document.getElementById("errorMessage");
 var signUpText = document.getElementById("signInMessage");
 
-//note: on every page, we need a function that checks which user is this. this can be done
-//through session but is unsafe but who the fuk cares.
-//If the user visits any page, we should check the session for a logged in user. 
-//The session info should contain: username and password
 
 function validateLogin() {
     var usermail = document.getElementById("usermail").value;
@@ -40,6 +36,11 @@ function validateSignup() {
         errorText.style.display = "block";
         return false;
     }
+	if( password.length < 6 ){
+		errorText.innerHTML = "Error: Password must be 6 or more characters";
+		errorText.style.display = "block";
+		return false;
+	}
     return true;
 
 }
