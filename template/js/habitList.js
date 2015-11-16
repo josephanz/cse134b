@@ -1,7 +1,7 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
 
-function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, parseObject) {
+function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, notificationTime, parseObject) {
   this.habitId = habitId
   this.habitName = habitName;
   this.iconSource = iconSource;
@@ -10,6 +10,7 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
   this.freqSet = freqSet; // user set freq.
   this.freqSetMet = freqSetMet;
   this.freqBest = freqBest;
+  this.notificationTime = notificationTime;
   this.parseObject = parseObject;
   this.updateField = function(field, newValue, localId) {
     updateHabit(this.parseObject, field, newValue);
@@ -56,10 +57,10 @@ function getHabits() {
         var object = results[i];
         var habitItem = new habit(object.id, object.get("habitName"), object.get("icon").url(),
           object.get("freqCount"), object.get("freqDay"), object.get("freqSet"),
-          object.get("freqSetMet"), object.get("freqBest"), object);
+          object.get("freqSetMet"), object.get("freqBest"), object.get("notificationTime"), object);
 
         habitsArray[i] = habitItem;
-
+        console.log(object.get("notificationTime"));
       }
       alert("Successfully retrieved " + habitsArray.length);
       //JOE YOUR CODE GOES HERE
