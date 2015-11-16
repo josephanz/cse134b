@@ -8,23 +8,8 @@
 	<script src="../libs/notification.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
-    <!--check if user logged in-->
-    <script>
-            Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
-            //below is non-debug version:
-            //if(Parse.User.current() == null){window.location = ("../src/login.html");}
-            //below is debug version:
-            var currentUser = Parse.User.current();
-            if(currentUser){
-                console.log("user is logged in as:");
-                var userinfo = JSON.stringify(currentUser);
-                console.log( eval ("(" + userinfo + ")"));
-            }
-            else{
-                window.location = ("../src/login.html");
-            }
-    </script>
+	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+	<script type="text/javascript" src = "../js/user.js"></script>
 	<style>
 		.popup {
 			width:200px;
@@ -175,15 +160,17 @@
 		}
 
 		function createPopUp(title, notiBody, notiIcon) {
+		console.log("hi");
 			var popup = document.createElement("div");
 			popup.innerHTML = "<strong>" + title + "</strong>" + "<br>" + notiBody;
 			popup.className = 'popup';
+			popup.id = 'popup';
 			popup.style.display = 'none';
 			popup.onclick = function() {
 				$('.popup').fadeOut(400);
-                var element = document.getElementsByTag('body');
-                var child = document.getElementsByClassName('popup');
-                element.removeChild(child);
+                var element = document.getElementById('popup');
+                console.log(element.parentNode);
+                element.parentNode.removeChild(element);
 			}
 			document.body.appendChild(popup);
 			$('.popup').fadeIn(400);
@@ -211,9 +198,9 @@
             var index = 0;
             // var habitList = getHabitList();
             // var length = habitList.length;
-            var hour = 21;
-            var minute = 50;
-            var length = 10;
+            var hour = 22;
+            var minute = 40;
+            var length = 20;
             for(i = 0; i < length; i++) {
                 // var time = habitList[index].time;
                 // var hourMinute = time.split(":");
