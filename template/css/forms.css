@@ -7,10 +7,10 @@ html {
 
 body {
   font-family: 'Helvetica', sans-serif;
-  background: -webkit-linear-gradient(left top, #dddddd, #aaaaaa) fixed; /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right,#dddddd, #aaaaaa) fixed; /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, #dddddd, #aaaaaa) fixed ; /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right,  #dddddd, #aaaaaa) fixed; /* Standard syntax */
+  background: -webkit-linear-gradient(left top, #666666, #444444) fixed; /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right,#666666, #444444) fixed; /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #666666, #444444) fixed ; /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right,  #666666, #444444) fixed; /* Standard syntax */
   background-color: black;
   height: 100%;
   width: 100%;
@@ -141,7 +141,7 @@ input#save{
 	background: none;
 	border: none;
 	color: white;
-	background-color: #777777;
+	background-color: rgba(40,40,40,0.8);
 	-webkit-border-radius: 15px; /*For Safari, etc. */
 	-moz-border-radius: 15px; /* For Mozilla, etc. */
 	border-radius: 15px; /* CSS3 Feature */	
