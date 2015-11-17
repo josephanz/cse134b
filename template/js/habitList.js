@@ -21,14 +21,14 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
   }
 }
 
-function updateField(habit, field, newValue) {
-  habit.set(field, newValue);
-  habit.save(null, {
-    success: function(gameScore) {
-      console.log("updated field");
-    }
-  });
-}
+  function updateField(habit, field, newValue) {
+    habit.set(field, newValue);
+    habit.save(null, {
+      success: function(gameScore) {
+        console.log("updated field");
+      }
+    });
+  }
 
 function deleteHabit(habit) {
   habit.destroy({

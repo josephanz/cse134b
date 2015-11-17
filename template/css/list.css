@@ -16,17 +16,17 @@ body{
 /* habit info */
 .habit-info{padding:0;margin-left:20px;}
 .habit-info > li{list-style:none; height:100%; padding:0; margin-right:5px; vertical-align: center;}
-.habit-name{margin:0; padding:0; height:100%; display:inline-block; vertical-align: middle; line-height:60px; color:#555; font-size:22px; font-variant:small-caps; font-family:"Lucida Handwriting", cursive;}
-.habit-icon{margin:0; border-radius:50%;width:100px; height:100px;}
+.habit-name{margin-left:10px; padding:0; height:100%; display:inline-block; vertical-align: middle; line-height:60px; color:#555; font-size:22px; font-variant:small-caps; font-family:"Lucida Handwriting", cursive;}
+.habit-icon{margin-left:10px; border-radius:50%;width:150px; height:150px;}
 
 .message{position:absolute; display:inline-block; visibility: hidden; text-align:center; color:#888;}
 .message-total{visibility: visible;}
 .message-total>svg{margin: 15px auto;}
 
 /* operations (for a existing habit) */
-.habit-op{position:absolute; right:-120px; display:inline-block; height: 100%; line-height: 60px;width:100%;text-align:center;top:170px;margin:0 auto;}
-.habit-op img{height: 90%;}
-.op{width:60px; height:60px;margin-right:5px;border-radius: 50%; box-shadow: 0 0 3px gray; padding: 5px; vertical-align: middle;}
+.habit-op{position:absolute; right:-140px; display:inline-block; height: 100%; line-height: 60px;width:100%;text-align:center;top:170px;margin:0 auto;}
+.habit-op img{height: 70%;}
+.op{width:50px; height:50px;margin-right:5px;border-radius: 50%; box-shadow: 0 0 3px gray; padding: 5px; vertical-align: middle;}
 .op:hover{box-shadow: 0 0 5px gray;}
 .op:active{box-shadow: 0 0 10px gray;}
 .op:focus{outline-style:none;}
@@ -44,7 +44,7 @@ body{
 .op-del:active{background:#FB2613; border:2px red;}
 
 /* add habit */
-#addHabit{position:fixed; bottom: 40px; right:7%;background: #dddddd; width: 60px;height:60px; vertical-align: middle; font-size:42px; padding: 5px;line-height: 100%;color: rgba(40, 40, 40, 0.7); border:2px solid rgba(85,85,85,0.7); -webkit-appereance: none; border-radius: 50%; box-shadow: 0 0 3px gray;}
+#addHabit{position:fixed; bottom: 7%; right:15%;background: #dddddd; width: 60px;height:60px; vertical-align: middle; font-size:42px; padding: 5px;line-height: 100%;color: rgba(40, 40, 40, 0.7); border:2px solid rgba(85,85,85,0.7); -webkit-appereance: none; border-radius: 50%; box-shadow: 0 0 3px gray;}
 #addHabit:hover{background: #ffffff; border:1px solid rgba(85,85,85,0.7); box-shadow: 0 0 5px gray;}
 #addHabit:active{border: 2px solid gray; background: rgba(33, 72, 100); box-shadow: 0 0 10px gray;}
 #addHabit:focus{outline-style:none;}

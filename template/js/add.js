@@ -101,24 +101,6 @@ function saveIt() {
   //document.location.href = "list.html";
 }
 
-$(function() {
-  $(":file").change(function() {
-    if (this.files && this.files[0]) {
-      var reader = new FileReader();
-      reader.onload = imageIsLoaded;
-      reader.readAsDataURL(this.files[0]);
-    }
-  });
-});
-
-
-function imageIsLoaded(e) {
-  //  $('#upload').remove();
-  $('#icon4').attr('style', "visiblility: visible;");
-  $('#icon4').attr('onclick', "selectImage('icon4')");
-  $('#icon4').attr('src', e.target.result);
-};
-
 function addHabit(title, perWeek, perDay, notificationTime) {
   var TestObject = Parse.Object.extend("Habits");
   var testObject = new TestObject();
@@ -183,3 +165,31 @@ function createImage() {
   }
   return parseFile;
 }
+
+$(function() {
+  $(":file").change(function() {
+    if (this.files && this.files[0]) {
+      var reader = new FileReader();  
+      var size = document.getElementById('upload').files[0].size;
+      if (size > 1024*2000)
+      {     
+      	document.getElementById("iconupload").style.color = "red";
+   		document.getElementById("iconupload").innerHTML = "Habit Icon: file size must not exceed 2mb, size is " + size + " bytes";
+      }
+      else 
+      {
+        reader.onload = imageIsLoaded;
+        reader.readAsDataURL(this.files[0]);
+  	  }
+	}
+  });
+});
+
+
+function imageIsLoaded(e) {
+  //$('#upload').remove();
+  $('#icon4').attr('style', "visiblility: visible;");
+  $('#icon4').attr('onclick', "selectImage('icon4')");
+  $('#icon4').attr('src', e.target.result);
+};
+
