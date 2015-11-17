@@ -1,7 +1,7 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
 
-function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, notificationTime, parseObject) {
+function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, notificationTime, freqPerWeek, parseObject) {
   this.habitId = habitId
   this.habitName = habitName;
   this.iconSource = iconSource;
@@ -11,6 +11,7 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
   this.freqSetMet = freqSetMet;
   this.freqBest = freqBest;
   this.notificationTime = notificationTime;
+  this.freqPerWeek = freqPerWeek;
   this.parseObject = parseObject;
   this.updateField = function(field, newValue, localId) {
     updateHabit(this.parseObject, field, newValue);
@@ -57,14 +58,13 @@ function getHabits() {
         var object = results[i];
         var habitItem = new habit(object.id, object.get("habitName"), object.get("icon").url(),
           object.get("freqCount"), object.get("freqDay"), object.get("freqSet"),
-          object.get("freqSetMet"), object.get("freqBest"), object.get("notificationTime"), object);
+          object.get("freqSetMet"), object.get("freqBest"), object.get("notificationTime"), object.get("freqPerWeek"), object);
 
         habitsArray[i] = habitItem;
       }
       // alert("Successfully retrieved " + habitsArray.length);
       console.log("Successfully retrieved " + habitsArray.length);
       //JOE YOUR CODE GOES HERE
-      
       displayContent(habitsArray);
       makeNotifications(habitsArray);
     },
@@ -169,7 +169,6 @@ function sendNotification(title, notiBody, notiIcon) {
     }
 
 function createPopUp(title, notiBody, notiIcon) {
-console.log("hi");
   var popup = document.createElement("div");
   popup.innerHTML = "<strong>" + title + "</strong>" + "<br>" + notiBody;
   popup.className = 'popup';
@@ -177,53 +176,94 @@ console.log("hi");
   popup.style.display = 'none';
   popup.onclick = function() {
     $('.popup').fadeOut(400);
-            var element = document.getElementById('popup');
-            console.log(element.parentNode);
-            element.parentNode.removeChild(element);
+        var element = document.getElementById('popup');
+        console.log(element.parentNode);
+        element.parentNode.removeChild(element);
   }
   document.body.appendChild(popup);
   $('.popup').fadeIn(400);
 }
 
-function executeAt(hour, minute, func) {
-    var currentHour  = new Date().getHours();
-    var currentMin = new Date().getMinutes();
-    var milisec = hour * 3600 * 1000 + minute * 60 * 1000;
-    var currentMilisec = currentHour * 3600 * 1000 + currentMin * 60 * 1000;
-    if(currentMilisec > milisec) {
-        console.log("Time is in the past");
-        index++;
-        return false;
+function executeAt(hour, minute, freqPerWeek, func) {
+    var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
+    if(timeDiff != -1) {
+      setTimeout(func, timeDiff);
     }
-    var timeDiff = milisec - currentMilisec;
-    console.log("time diff " + timeDiff);
-    setTimeout(func, timeDiff);
-    return true;
 }
 
- var index = 0;
+function compare(a, b) {
+  if(a.notificationTime > b.notificationTime) {
+    return 1
+  } else {
+    return -1;
+  }
+}
+
+function getTimeDiff(hour, minute, freqPerWeek) {
+    var currentDay = new Date().getDay();
+    var currentHour = new Date().getHours();
+    var currentMin = new Date().getMinutes();
+    if(freqPerWeek[currentDay] == true) {
+      var milisec = hour * 3600 * 1000 + minute * 60 * 1000;
+      var currentMilisec = currentHour * 3600 * 1000 + currentMin * 60 * 1000;
+      if(currentMilisec > milisec) {
+        console.log("Time is in the past");
+        return -1;
+      } else {
+        console.log("Valid time");
+        console.log(milisec - currentMilisec);
+        return milisec - currentMilisec;
+      }
+    } else {
+      console.log("Not today");
+      return -1;
+    }
+}
+
+function getHabitsForNotifications(habitsArray) {
+  var habitsList = [];
+  var length = habitsArray.length;
+  var i = 0;
+  for(i = 0; i < length; i++) {
+      var time = habitsArray[i].notificationTime;
+      var hourMinute = time.split(":");
+      var hour = Number(hourMinute[0]);
+      var minute = Number(hourMinute[1]);
+      var freqPerWeek = habitsArray[i].freqPerWeek;
+      var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
+      if(timeDiff != -1) {
+        habitsList.push(habitsArray[i]);
+      }
+  }
+  return habitsList;
+}
+
 //set time out functions for notifications
 function makeNotifications(habitsArray) {
-    console.log("makeNotifications() called");
-    var i;
-    var length = habitsArray.length;
-    for(i = 0; i < length; i++) {
-        var time = habitsArray[i].notificationTime;
-        console.log("time: " + time);
-        var hourMinute = time.split(":");
-        var hour = Number(hourMinute[0]);
-        var minute = Number(hourMinute[1]);
-        executeAt(hour, minute, function(){
-            //get time, and notification text, image
-            var title = habitsArray[index].habitName;
-            var body = "Have you " + title + " today?"
-            var icon = habitsArray[index].iconSource;
-            console.log(title);
-            sendNotification(title, body, icon);
-            // sendNotification("test", "this is a test" + index++, "../img/sleep.jpg")
-           index++;
-        });
-    }
+  console.log("makeNotifications() called");
+  var habitsList = getHabitsForNotifications(habitsArray);
+  habitsList.sort(compare);
+  var i;
+  var length = habitsList.length;
+  var index = 0;
+  for(i = 0; i < length; i++) {
+    var days = habitsList[i].freqPerWeek;
+    var time = habitsList[i].notificationTime;
+    var hourMinute = time.split(":");
+    var hour = Number(hourMinute[0]);
+    var minute = Number(hourMinute[1]);
+
+    console.log("time: " + time + " habit: " + habitsList[i].habitName);
+    console.log(habitsList[i].freqPerWeek);
+
+    executeAt(hour, minute, days, function() {
+      var title = habitsList[index].habitName;
+      var body = "Have you " + title + " today?";
+      var icon = habitsList[index].iconSource;
+      sendNotification(title, body, icon);
+      index++;
+    });
+  } 
 }
 
 getHabits();
