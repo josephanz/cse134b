@@ -11,7 +11,7 @@ body {
   background: -o-linear-gradient(bottom right,#dddddd, #aaaaaa) fixed; /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient(bottom right, #dddddd, #aaaaaa) fixed ; /* For Firefox 3.6 to 15 */
   background: linear-gradient(to bottom right,  #dddddd, #aaaaaa) fixed; /* Standard syntax */
-  background-color: black;x
+  background-color: black;
   height: 100%;
   width: 100%;
   padding: 0;
