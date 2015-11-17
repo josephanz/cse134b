@@ -60,24 +60,25 @@ function getHabits() {
           object.get("freqSetMet"), object.get("freqBest"), object.get("notificationTime"), object);
 
         habitsArray[i] = habitItem;
-        console.log(object.get("notificationTime"));
       }
-      alert("Successfully retrieved " + habitsArray.length);
+      // alert("Successfully retrieved " + habitsArray.length);
+      console.log("Successfully retrieved " + habitsArray.length);
       //JOE YOUR CODE GOES HERE
       
-      console.log(habitsArray)
       displayContent(habitsArray);
+      makeNotifications(habitsArray);
     },
     error: function(model, error) {
       $(".error").show();
     }
   });
+  return habitsArray
 }
 
 function displayContent(habitsArray){
   var habitsArrayLen = habitsArray.length;
   console.log(habitsArray);
-  console.log("here " +habitsArrayLen);
+  console.log("size: " + habitsArrayLen);
   var i; 
   for(i = 0; i< habitsArrayLen; i++){
     valuesConcatenatedID = habitsArray[i]["habitId"] +"-"+habitsArray[i]["freqSetMet"]+"-"+habitsArray[i]["freqBest"]+"-"+habitsArray[i]["freqCount"]+"-"+habitsArray[i]["freqSet"]+"-"+habitsArray[i]["freqDay"];
@@ -146,5 +147,83 @@ function updateFreq(element,items){
 
 }
 
+function sendNotification(title, notiBody, notiIcon) {
+      if(Notification.permission !== 'granted') {
+        Notification.requestPermission();
+      }
+      var n  = new Notification(title, {
+        body: notiBody,
+        icon: notiIcon
+      });
+            try {
+          if(window.external && window.external.msIsSiteMode() !== undefined) {
+            if(window.external.msIsSiteMode()) {
+              createPopUp(title, notiBody, notiIcon);
+            } else {
+              createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
+            }
+          }
+            } catch(ex) {
+                console.log("Site mode is not supported");
+            }
+    }
+
+function createPopUp(title, notiBody, notiIcon) {
+console.log("hi");
+  var popup = document.createElement("div");
+  popup.innerHTML = "<strong>" + title + "</strong>" + "<br>" + notiBody;
+  popup.className = 'popup';
+  popup.id = 'popup';
+  popup.style.display = 'none';
+  popup.onclick = function() {
+    $('.popup').fadeOut(400);
+            var element = document.getElementById('popup');
+            console.log(element.parentNode);
+            element.parentNode.removeChild(element);
+  }
+  document.body.appendChild(popup);
+  $('.popup').fadeIn(400);
+}
+
+function executeAt(hour, minute, func) {
+    var currentHour  = new Date().getHours();
+    var currentMin = new Date().getMinutes();
+    var milisec = hour * 3600 * 1000 + minute * 60 * 1000;
+    var currentMilisec = currentHour * 3600 * 1000 + currentMin * 60 * 1000;
+    if(currentMilisec > milisec) {
+        console.log("Time is in the past");
+        index++;
+        return false;
+    }
+    var timeDiff = milisec - currentMilisec;
+    console.log("time diff " + timeDiff);
+    setTimeout(func, timeDiff);
+    return true;
+}
+
+ var index = 0;
+//set time out functions for notifications
+function makeNotifications(habitsArray) {
+    console.log("makeNotifications() called");
+    var i;
+    var length = habitsArray.length;
+    for(i = 0; i < length; i++) {
+        var time = habitsArray[i].notificationTime;
+        console.log("time: " + time);
+        var hourMinute = time.split(":");
+        var hour = Number(hourMinute[0]);
+        var minute = Number(hourMinute[1]);
+        executeAt(hour, minute, function(){
+            //get time, and notification text, image
+            var title = habitsArray[index].habitName;
+            var body = "Have you " + title + " today?"
+            var icon = habitsArray[index].iconSource;
+            console.log(title);
+            sendNotification(title, body, icon);
+            // sendNotification("test", "this is a test" + index++, "../img/sleep.jpg")
+           index++;
+        });
+    }
+}
 
 getHabits();
