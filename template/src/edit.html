@@ -3,120 +3,147 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Edit Habit</title>
+		<link rel="stylesheet" href="../css/forms.css">
+		<script src="../libs/notification.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
 		<script type="text/javascript" src = "../js/user.js"></script>
-        
-		<title>Edit a habit</title>
-		<link rel="stylesheet" href="../css/forms.css">
 		<style>
 		    .onoffswitch {
-    position: relative; width: 90px;
-    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
-    }
-    .onoffswitch-checkbox {
-    display: none;
-    }
-    .onoffswitch-label {
-    display: block; overflow: hidden; cursor: pointer;
-    border: 2px solid #999999; border-radius: 20px;
-    }
-    .onoffswitch-inner {
-    display: block; width: 200%; margin-left: -100%;
-    transition: margin 0.3s ease-in 0s;
-    }
-    .onoffswitch-inner:before, .onoffswitch-inner:after {
-    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
-    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
-    box-sizing: border-box;
-    }
-    .onoffswitch-inner:before {
-    content: "ON";
-    padding-left: 10px;
-    background-color: #465154; color: #FFFFFF;
-    }
-    .onoffswitch-inner:after {
-    content: "OFF";
-    padding-right: 10px;
-    background-color: #EEEEEE; color: #999999;
-    text-align: right;
-    }
-    .onoffswitch-switch {
-    display: block; width: 18px; margin: 6px;
-    background: #FFFFFF;
-    position: absolute; top: 0; bottom: 0;
-    right: 56px;
-    border: 2px solid #999999; border-radius: 20px;
-    transition: all 0.3s ease-in 0s;
-    }
-    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-    margin-left: 0;
-    }
-    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px;
-    }
+		    position: relative; width: 90px;
+		    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+		    }
+		    .onoffswitch-checkbox {
+		    display: none;
+		    }
+		    .onoffswitch-label {
+		    display: block; overflow: hidden; cursor: pointer;
+		    border: 2px solid #999999; border-radius: 20px;
+		    }
+		    .onoffswitch-inner {
+		    display: block; width: 200%; margin-left: -100%;
+		    transition: margin 0.3s ease-in 0s;
+		    }
+		    .onoffswitch-inner:before, .onoffswitch-inner:after {
+		    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+		    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+		    box-sizing: border-box;
+		    }
+		    .onoffswitch-inner:before {
+		    content: "ON";
+		    padding-left: 10px;
+		    background-color: #465154; color: #FFFFFF;
+		    }
+		    .onoffswitch-inner:after {
+		    content: "OFF";
+		    padding-right: 10px;
+		    background-color: #EEEEEE; color: #999999;
+		    text-align: right;
+		    }
+		    .onoffswitch-switch {
+		    display: block; width: 18px; margin: 6px;
+		    background: #FFFFFF;
+		    position: absolute; top: 0; bottom: 0;
+		    right: 56px;
+		    border: 2px solid #999999; border-radius: 20px;
+		    transition: all 0.3s ease-in 0s;
+		    }
+		    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+		    margin-left: 0;
+		    }
+		    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+		    right: 0px;
+		    }
 		</style>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	</head>
 	<body>
-		<script>
-			function onStart() {
-            	document.getElementById("icon2").style.border="3px inset #999999";
-
-			}
-			window.onload = onStart;
-		</script>
 		<div class="forms">
-			<h2>Edit Habit</h2>
+			<h2>Edit</h2>
 			<form>
 				<p class="titleH">Habit Title</p>
-				<p><input id="title" type="text" name="habitname" placeholder="eg: exercise 30 minutes"></p>
-				<p class="titleH">Habit Icon</p>
-				<img id="icon1" class="icon" onclick="selectImage('icon1');" src="../img/sleep.jpg" alt="sleep image"/>
-				<img id="icon2" class="icon" onclick="selectImage('icon2');" src="../img/salad.jpg" alt="eat image"/>
-				<img id="icon3" class="icon" onclick="selectImage('icon3');" src="../img/run.jpg" alt="run image"/>
-				<img class="icon" src="../img/add.png" alt="find a image"/>
-				<p><label>Weekly Frequency</label></p>
+				<p><input id="title" type="text" name="habitname" placeholder="eg: exercise 30 minutes" required></p>
+
+				<p class="titleH" id="iconupload">Habit Icon</p>
+
+
+	<!--			<img id="icon2" class="icon" onclick="selectImage('icon2');" src="../img/okay.jpg" alt="eat image"/>
+	-->			<img id="habitIcon" class="icon" onclick="selectImage('icon3');" src="" alt="run image"/>
+				<label for="upload">
+					<input type="file" id="upload" accept="image/*"/>
+					<img id="icon4" class="icon" src="../img/add.png" alt="find a image"/>
+				</label>
+				<label> <img id="showhere" class="icon" onclick="selectImage('showhere');" src="#" alt="" style="visibility: hidden;"/> </label>
+
+
+				<p class="titleH" id="weeklyFreq">Weekly Frequency</p>
 				<div id="ck-button">
-					<label> <input type="checkbox" name="date" value="sunday" checked><span>Sun</span></label>
+					<label> <input type="checkbox" name="date" value="sunday"><span>Sun</span></label>
 					<label> <input type="checkbox" name="date" value="monday"><span>Mon</span></label>
-					<label> <input type="checkbox" name="date" value="tuesday" checked><span>Tues</span></label>
+					<label> <input type="checkbox" name="date" value="tuesday"><span>Tue</span></label>
 					<label> <input type="checkbox" name="date" value="wednesday"><span>Wed</span></label>
-					<label> <input type="checkbox" name="date" value="thursday" checked><span>Thur</span></label>
+					<label> <input type="checkbox" name="date" value="thursday"><span>Thu</span></label>
 					<label> <input type="checkbox" name="date" value="friday"><span>Fri</span></label>
 					<label> <input type="checkbox" name="date" value="saturday"><span>Sat</span></label>
 				</div>
-		
-		
-				<p><label>Daily Frequency</label></p>
+
+
+				<p class="titleH">Daily Frequency</p>
 				<div id="daily-button">
-					<label> <input type="checkbox" name="day" value="one"><span>1</span></label>
-					<label> <input type="checkbox" name="day" value="two"><span>2</span></label>
-					<label> <input type="checkbox" name="day" value="three" checked><span>3</span></label>
+					<label> <input type="radio" name="day" value="1"><span>1</span></label>
+					<label> <input type="radio" name="day" value="2"><span>2</span></label>
+					<label> <input type="radio" name="day" value="3"><span>3</span></label>
 					<span id="times">times</span>
 				</div>
+				<!-- <p><label><span id="others_text">Others: </span><input id="others" type="text" name="day" placeholder="More than 3 times"></label></p> -->
 
-				
-				<p><label>Notifications</label></p> 
+				<p><label>Notifications</label></p>
 				    <div class="onoffswitch" style="margin-left:0%; float:left">
 						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked onclick="toggle()">
 						<label class="onoffswitch-label" for="myonoffswitch">
 							<span class="onoffswitch-inner"></span>
 							<span class="onoffswitch-switch"></span>
 						</label>
-					</div> 
-					<div id="time_field" style="margin-left:10%;float:left">
-						<label>Time:</label>
-						<input type="time">
 					</div>
+					<div id="time_selector" style="margin-left:10%;float:left; line-height:2">
+						<select id="hour">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+							<option>7</option>
+							<option>8</option>
+							<option>9</option>
+							<option>10</option>
+							<option>11</option>
+							<option>12</option>
+						</select>
+						<select id="min">
+							<option>00</option>
+							<option>15</option>
+							<option>30</option>
+							<option>45</option>
+						</select>
+						<select id="ampm">
+							<option>AM</option>
+							<option>PM</option>
+						</select>
+					</div>
+				<!-- 	<div id="time_field" style="margin-left:10%;float:left">
+							<label>Time:</label>
+							<input type="time" id="time"/>
+						</div>-->
 					<br>
-				<p id="save_p"><input id="save" type="button" value="Save It" onclick="location.href='list.html'"></p>
-				
+					<br>
+
+				<p id="save_p"><input id="save" type="button" value="Save It" onclick="saveIt()"></p>
+
 			</form>
 
 		</div>
-		<script type="text/javascript" src="../js/add.js"></script>
-
-
-		</script>
+		<script type="text/javascript" src="../js/edit.js"></script>
 	</body>
 </html>
