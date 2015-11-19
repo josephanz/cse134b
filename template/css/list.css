@@ -23,6 +23,7 @@ body{
 .message-total{visibility: visible;}
 .message-total>svg{margin: 15px auto;}
 
+
 /* operations (for a existing habit) */
 .habit-op{position:absolute; right:-140px; display:inline-block; height: 100%; line-height: 60px;width:100%;text-align:center;top:170px;margin:0 auto;}
 .habit-op img{height: 70%;}
@@ -53,12 +54,12 @@ body{
 @media only screen
     and (max-width: 500px) {
         section{width:350px;margin: 0 auto;}
-        .message{right:5px;bottom:80px;font-size: small;}
+        .message{right:5px;bottom:85px;font-size: small;}
 }
 
 /* desktop, tablet */
 @media only screen
     and (min-width: 500px) {
     section{width:500px;margin: 0 auto;}
-    .message{right:60px;bottom:80px;}
+    .message{right:60px;bottom:85px;}
 }

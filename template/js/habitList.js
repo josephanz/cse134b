@@ -1,7 +1,7 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
 
-function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, notificationTime, freqPerWeek, parseObject) {
+function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, completedDayDate, updatedFreqDate, parseObject) {
   this.habitId = habitId
   this.habitName = habitName;
   this.iconSource = iconSource;
@@ -10,9 +10,10 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
   this.freqSet = freqSet; // user set freq.
   this.freqSetMet = freqSetMet;
   this.freqBest = freqBest;
-  this.notificationTime = notificationTime;
-  this.freqPerWeek = freqPerWeek;
+  this.completedDayDate = completedDayDate;
+  this.updatedFreqDate = updatedFreqDate;
   this.parseObject = parseObject;
+  console.log("Parse Object = " + parseObject);
   this.updateField = function(field, newValue, localId) {
     updateHabit(this.parseObject, field, newValue);
   }
@@ -21,27 +22,27 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
   }
 }
 
-  function updateField(habit, field, newValue) {
-    habit.set(field, newValue);
-    habit.save(null, {
-      success: function(gameScore) {
-        console.log("updated field");
-      }
-    });
-  }
+function updateField(habit, field, newValue) {
+  habit.set(field, newValue);
+  habit.save(null, {
+    success: function(gameScore) {
+      console.log("updated field");
+    }
+  });
+}
 
 function deleteHabit(habit) {
   habit.destroy({
-  success: function(myObject) {
-    console.log("deleted habit");
+    success: function(myObject) {
+      console.log("deleted habit");
 
-    // The object was deleted from the Parse Cloud.
-  },
-  error: function(myObject, error) {
-    console.log("cnt delte" + error);
-    // error is a Parse.Error with an error code and message.
-  }
-});
+      // The object was deleted from the Parse Cloud.
+    },
+    error: function(myObject, error) {
+      console.log("cnt delte" + error);
+      // error is a Parse.Error with an error code and message.
+    }
+  });
 }
 
 function getHabits() {
@@ -58,30 +59,36 @@ function getHabits() {
         var object = results[i];
         var habitItem = new habit(object.id, object.get("habitName"), object.get("icon").url(),
           object.get("freqCount"), object.get("freqDay"), object.get("freqSet"),
-          object.get("freqSetMet"), object.get("freqBest"), object.get("notificationTime"), object.get("freqPerWeek"), object);
+          object.get("freqSetMet"), object.get("freqBest"), object.get("completedDayDate"), 
+          object.get("updatedFreqCount"), object);
 
         habitsArray[i] = habitItem;
+
       }
-      // alert("Successfully retrieved " + habitsArray.length);
-      console.log("Successfully retrieved " + habitsArray.length);
-      //JOE YOUR CODE GOES HERE
+      alert("Successfully retrieved " + habitsArray.length);
+      
+      console.log(habitsArray)
       displayContent(habitsArray);
-      makeNotifications(habitsArray);
     },
     error: function(model, error) {
       $(".error").show();
     }
   });
-  return habitsArray
 }
 
 function displayContent(habitsArray){
   var habitsArrayLen = habitsArray.length;
   console.log(habitsArray);
-  console.log("size: " + habitsArrayLen);
+  console.log("here " +habitsArrayLen);
   var i; 
   for(i = 0; i< habitsArrayLen; i++){
-    valuesConcatenatedID = habitsArray[i]["habitId"] +"-"+habitsArray[i]["freqSetMet"]+"-"+habitsArray[i]["freqBest"]+"-"+habitsArray[i]["freqCount"]+"-"+habitsArray[i]["freqSet"]+"-"+habitsArray[i]["freqDay"];
+    valuesConcatenatedID = habitsArray[i]["habitId"]; 
+    var checkButton = ""
+    if(habitsArray[i]["freqDay"] == 0&&habitsArray[i]["freqSet"] > habitsArray[i]["freqCount"]){
+      checkButton = '<button type="button" id="'+habitsArray[i]["habitId"]+'-checkButton" class="op op-done" onclick="showMsg(this);" title="done">\
+                        <img src="../img/done.svg" alt="Done">\
+                    </button>';
+    }
     document.getElementById("habit-list").innerHTML += ' \
             <li> \
                 <ul class="habit-info">\
@@ -90,18 +97,13 @@ function displayContent(habitsArray){
                 </ul>\
                 <div class="message" id='+valuesConcatenatedID+'>\
                     <span class="message-total">\
-                        <strong class="freqSetMet">'+habitsArray[i]["freqSetMet"]+'</strong> days in a row! Best Record: <strong>'+habitsArray[i]["freqBest"]+'</strong><br>\
-                        <svg height="25" width="150">\
-                            <line x1="0" y1="0" x2="60" y2="0" style="stroke:rgba(65, 131, 215, 0.8);stroke-width:25" />\
-                            <line x1="60" y1="0" x2="150" y2="0" style="stroke:rgba(171,171,171,0.6);stroke-width:25" />\
-                        </svg>\
-                    </span><br>\
-                    <span class="message-today">Completed <strong>'+habitsArray[i]["freqCount"]+'/'+habitsArray[i]["freqSet"]+'</strong> for today!</span>\
+                        <strong id="'+habitsArray[i]["habitId"]+'-freqDay" style="visibility: hidden;">'+habitsArray[i]["freqDay"]+'</strong>\
+                        <strong id="'+habitsArray[i]["habitId"]+'-freqSetMet">'+habitsArray[i]["freqSetMet"]+'</strong> days in a row! Best Record: <strong id="'+habitsArray[i]["habitId"]+'-freqBest">'+habitsArray[i]["freqBest"]+'</strong><br>\
+                        <progress value="1" max="2"></progress>\
+                    </span><br><br>\
+                    <span class="message-today">Completed <strong id="'+habitsArray[i]["habitId"]+'-freqCount">'+habitsArray[i]["freqCount"]+'</strong>/<strong id="'+habitsArray[i]["habitId"]+'-freqSet">'+habitsArray[i]["freqSet"]+'</strong> for today!</span>\
                 </div>\
-                <div class="habit-op">\
-                    <button type="button" class="op op-done" onclick="showMsg(this);" title="done">\
-                        <img src="../img/done.svg" alt="Done">\
-                    </button>\
+                <div class="habit-op">'+checkButton+'\
                     <button type="button" class="op op-edit" onclick="location.href=edit.html" title="edit habit">\
                         <img src="../img/edit.svg" alt="Edit">\
                     </button>\
@@ -110,63 +112,105 @@ function displayContent(habitsArray){
                     </button>\
                 </div>\
             </li>';
+
+            
     
   }
 
 }
 
+function removeHTMLElement(id) {
+    console.log("enetredthe rremove function");
+    return (elem=document.getElementById(id)).parentNode.removeChild(elem);
+}
 
-function updateFreq(element,items){
-  var Point = Parse.Object.extend("Habits");
-  var point = new Point();
-  point.id = items[0]; 
-  alert(element);
-  if(items[5] === '0'){ //met for the day
-      if(items[3] < items[4]){
 
-        // Set a new value on quantity
-        point.set("freqCount", 1000);//parseInt(items[3])+1);
-        point.set("freqDay", 1000),
-        // Save
-        point.save(null, {
-          success: function(point) {
-            // Saved successfully.
-            console.log("updatedCount");
-            console.log(element);
-          },
-          error: function(point, error) {
-            // The save failed.
-            // error is a Parse.Error with an error code and description.
-          }
-        });
-      }else{
-        
-        console.log("here");
+function updateFreq(id){
+  var habitId = id;
+  var freqSetMet = parseInt(document.getElementById(habitId + "-freqSetMet").innerHTML);
+  var freqBest = parseInt(document.getElementById(habitId + "-freqBest").innerHTML); 
+  var freqCount = parseInt(document.getElementById(habitId + "-freqCount").innerHTML);
+  var freqSet = parseInt(document.getElementById(habitId + "-freqSet").innerHTML);
+  var freqDay = parseInt(document.getElementById(habitId + "-freqDay").innerHTML);
+  var updateList = []
+
+
+  if(freqDay == 0){
+      if(freqCount < freqSet){
+        freqCount +=1; 
+        console.log("entered updated count" + freqCount);
+        document.getElementById(habitId + "-freqCount").innerHTML = freqCount;
+        updateList.push({key: "freqCount", "val":freqCount});
+        //update on server
+        if(freqCount == freqSet){
+          removeHTMLElement(habitId+"-checkButton");
+          freqDay = 1;
+          document.getElementById(habitId + "-freqDay").innerHTML = freqDay;
+          updateList.push({"key":"freqDay", "val": freqDay});
+          freqSetMet += 1;
+          document.getElementById(habitId + "-freqSetMet").innerHTML = freqSetMet;
+          updateList.push({"key":"freqSetMet","val": freqSetMet});
+          if(freqSetMet > freqBest){
+            freqBest = freqSetMet;
+            document.getElementById(habitId + "-freqBest").innerHTML = freqBest;
+            updateList.push({"key":"freqBest", "val": freqBest});
+
+          }  
+        }  
       }
-  }
+      updateById(habitId,updateList);
+
+  }   
 
 }
 
-function sendNotification(title, notiBody, notiIcon) {
-      if(Notification.permission !== 'granted') {
-        Notification.requestPermission();
-      }
-      var n  = new Notification(title, {
-        body: notiBody,
-        icon: notiIcon
-      });
-            try {
-          if(window.external && window.external.msIsSiteMode() !== undefined) {
-            if(window.external.msIsSiteMode()) {
-              createPopUp(title, notiBody, notiIcon);
-            } else {
-              createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
-            }
-          }
-            } catch(ex) {
-                console.log("Site mode is not supported");
-            }
+function updateById(id,list){
+  var Point = Parse.Object.extend("Habits");
+  var point = new Point();
+  point.id = id; 
+  var i;
+  console.log(list);
+  for(i in list){  
+    point.set(list[i].key, list[i].val);//parseInt(items[3])+1);
+    console.log(list[i].key +","+list[i].val);
+  }
+  // Save
+  point.save(null, {
+    success: function(point) {
+      // Saved successfully.
+      console.log("updated");
+   
+    },
+    error: function(point, error) {
+      // The save failed.
+      // error is a Parse.Error with an error code and description.
     }
+  });
+
+}
+
+
+
+function sendNotification(title, notiBody, notiIcon) {
+  if(Notification.permission !== 'granted') {
+    Notification.requestPermission();
+  }
+  var n  = new Notification(title, {
+    body: notiBody,
+    icon: notiIcon
+  });
+        try {
+      if(window.external && window.external.msIsSiteMode() !== undefined) {
+        if(window.external.msIsSiteMode()) {
+          createPopUp(title, notiBody, notiIcon);
+        } else {
+          createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
+        }
+      }
+        } catch(ex) {
+            console.log("Site mode is not supported");
+        }
+}
 
 function createPopUp(title, notiBody, notiIcon) {
   var popup = document.createElement("div");
