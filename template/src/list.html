@@ -57,12 +57,19 @@
         }
 
         function deleteHabit(element){
-            var elId = (element.parentNode.parentNode.getElementsByClassName("message"))[0].id;
-            var child = element.parentNode.parentNode;
-            var parent = child.parentNode;
-            parent.removeChild(child);
-            deleteTheHabit(elId);
-            
+            var result = confirm("Want to delete?");
+            if (result) {
+                var elId = (element.parentNode.parentNode.getElementsByClassName("message"))[0].id;
+                var child = element.parentNode.parentNode;
+                var parent = child.parentNode;
+                $(child).fadeOut(500, function(){ 
+                    parent.removeChild(child);
+                    deleteTheHabit(elId);
+                });
+
+                
+                
+            }
         }
     </script>
 </body>
