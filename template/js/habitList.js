@@ -73,7 +73,9 @@ function getHabits() {
 
       }
       //alert("Successfully retrieved " + habitsArray.length);
-
+      if(habitsArray.length == 0) {
+        window.location = "../src/welcome.html";
+      }
       console.log(habitsArray)
       displayContent(habitsArray);
       makeNotifications(habitsArray);
