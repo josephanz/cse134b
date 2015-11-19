@@ -92,7 +92,7 @@ function displayContent(habitsArray){
   var i;
   for(i = 0; i< habitsArrayLen; i++){
     valuesConcatenatedID = habitsArray[i]["habitId"];
-    var edit = "'../src/edit.html?id="+habitsArray[i]["habitId"]+"'"
+    var edit = "'../src/edit.html?habitId="+habitsArray[i]["habitId"]+"'"
     var checkButton = ""
     if(habitsArray[i]["freqDay"] == 0&&habitsArray[i]["freqSet"] > habitsArray[i]["freqCount"]){
       checkButton = '<button type="button" id="'+habitsArray[i]["habitId"]+'-checkButton" class="op op-done" onclick="showMsg(this);" title="done">\
@@ -157,7 +157,7 @@ function updateFreq(id){
   var updated;
   var currentDate = new Date().toString();
 
-  
+
   var l = currentDate.split(" ");
   currentDate = l[1]+l[2]+l[3];
   console.log("currentDate = "+ currentDate)
@@ -169,7 +169,7 @@ function updateFreq(id){
     updated = l[1]+l[2]+l[3];
     console.log(updated);
   }
-  
+
   if(completedDayDate != "undefined"){
     console.log("NO this one");
     var l = completedDayDate.split(" ");
@@ -198,7 +198,7 @@ function updateFreq(id){
   if(freqDay == 0){
       updateList = [];
       if(freqCount < freqSet){
-        freqCount +=1; 
+        freqCount +=1;
         console.log("entered updated count" + freqCount);
         document.getElementById(habitId + "-freqCount").innerHTML = freqCount;
         document.getElementById(habitId + "-progress").value = freqCount;
@@ -219,8 +219,8 @@ function updateFreq(id){
             document.getElementById(habitId + "-freqBest").innerHTML = freqBest;
             updateList.push({"key":"freqBest", "val": freqBest});
 
-          }  
-        }  
+          }
+        }
     }
     updateById(habitId,updateList);
 
