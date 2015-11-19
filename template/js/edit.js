@@ -1,19 +1,21 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
 var urlParams;
-(window.onpopstate = function () {
-    var match,
-        pl     = /\+/g,  // Regex for replacing addition symbol with a space
-        search = /([^&=]+)=?([^&]*)/g,
-        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-        query  = window.location.search.substring(1);
+(window.onpopstate = function() {
+  var match,
+    pl = /\+/g, // Regex for replacing addition symbol with a space
+    search = /([^&=]+)=?([^&]*)/g,
+    decode = function(s) {
+      return decodeURIComponent(s.replace(pl, " "));
+    },
+    query = window.location.search.substring(1);
 
-    urlParams = {};
-    while (match = search.exec(query))
-       urlParams[decode(match[1])] = decode(match[2]);
+  urlParams = {};
+  while (match = search.exec(query))
+    urlParams[decode(match[1])] = decode(match[2]);
 })();
 
-if (urlParams.habitId === undefined ) {
+if (urlParams.habitId === undefined) {
   alert("Warning!!! No Habit Selected");
 }
 
@@ -88,7 +90,9 @@ function populateNotificationTime(notificationTime) {
     var hour = time[0];
     var minutes = time[1];
     var amPm;
-    if (hour >= 0 && hour < 12) amPm = "AM";
+    if (hour == 0) hour = 12;
+    if (hour >= 1 && hour <= 12)
+      amPm = "AM";
     else {
       amPm = "PM";
       hour -= 12;
@@ -99,8 +103,7 @@ function populateNotificationTime(notificationTime) {
 
 
     document.getElementById("ampm").value = amPm;
-  }
-  else {
+  } else {
     document.getElementById("myonoffswitch").checked = false;
     visible = false;
     document.getElementById("time_selector").style.visibility = "hidden";
@@ -140,8 +143,7 @@ function populateWeeklyFreq(freqPerWeek) {
 function updateField(habit, field, newValue) {
   habit.set(field, newValue);
   habit.save(null, {
-    success: function(gameScore) {
-    }
+    success: function(gameScore) {}
   });
 }
 
