@@ -33,16 +33,20 @@ function updateField(habit, field, newValue) {
   });
 }
 
-function deleteHabit(habit) {
-  habit.destroy({
-    success: function(myObject) {
-      console.log("deleted habit");
-
-      // The object was deleted from the Parse Cloud.
+function deleteTheHabit(id) {
+  console.log("entered the delete");
+  var Habit = Parse.Object.extend("Habits");
+  var query = new Parse.Query(Habit);
+  query.get(id, {
+    success: function(myObj) {
+      // The object was retrieved successfully.
+      myObj.destroy({});
+      console.log("should have deleted");
+      //location.reload();  //reload the page for the notification to go away
     },
-    error: function(myObject, error) {
-      console.log("cnt delte" + error);
-      // error is a Parse.Error with an error code and message.
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
     }
   });
 }
@@ -67,7 +71,7 @@ function getHabits() {
         habitsArray[i] = habitItem;
 
       }
-      alert("Successfully retrieved " + habitsArray.length);
+      //alert("Successfully retrieved " + habitsArray.length);
       
       console.log(habitsArray)
       displayContent(habitsArray);
@@ -80,12 +84,14 @@ function getHabits() {
 }
 
 function displayContent(habitsArray){
+  
   var habitsArrayLen = habitsArray.length;
   console.log(habitsArray);
   console.log("here " +habitsArrayLen);
   var i; 
   for(i = 0; i< habitsArrayLen; i++){
     valuesConcatenatedID = habitsArray[i]["habitId"]; 
+    var edit = "'../src/edit.html?id="+habitsArray[i]["habitId"]+"'"
     var checkButton = ""
     if(habitsArray[i]["freqDay"] == 0&&habitsArray[i]["freqSet"] > habitsArray[i]["freqCount"]){
       checkButton = '<button type="button" id="'+habitsArray[i]["habitId"]+'-checkButton" class="op op-done" onclick="showMsg(this);" title="done">\
@@ -107,7 +113,7 @@ function displayContent(habitsArray){
                     <span class="message-today">Completed <strong id="'+habitsArray[i]["habitId"]+'-freqCount">'+habitsArray[i]["freqCount"]+'</strong>/<strong id="'+habitsArray[i]["habitId"]+'-freqSet">'+habitsArray[i]["freqSet"]+'</strong> for today!</span>\
                 </div>\
                 <div class="habit-op">'+checkButton+'\
-                    <button type="button" class="op op-edit" onclick="location.href=edit.html" title="edit habit">\
+                    <button type="button" class="op op-edit" onclick="location.href='+edit+'" title="edit habit">\
                         <img src="../img/edit.svg" alt="Edit">\
                     </button>\
                     <button type="button" class="op op-del" onclick="deleteHabit(this);" title="delete habit">\
@@ -123,7 +129,7 @@ function displayContent(habitsArray){
 }
 
 function removeHTMLElement(id) {
-    console.log("enetredthe rremove function");
+  
     return (elem=document.getElementById(id)).parentNode.removeChild(elem);
 }
 
