@@ -60,7 +60,7 @@
 	</head>
 	<body>
 		<div class="forms">
-			<h2>Edit</h2>
+			<div class="headerBar"><button type="button" onclick="window.location.href='../src/list.html'">X</button><h2>Edit a Habit</h2></div>
 			<form>
 				<p class="titleH">Habit Title</p>
 				<p><input id="title" type="text" name="habitname" placeholder="eg: exercise 30 minutes" required></p>
@@ -72,7 +72,7 @@
 	-->			<img id="habitIcon" class="icon" onclick="selectImage('icon3');" src="" alt="run image"/>
 				<label for="upload">
 					<input type="file" id="upload" accept="image/*"/>
-					<img id="icon4" class="icon" src="../img/add.png" alt="find a image"/>
+					<img id="icon4" class="icon" src="../img/plus-sign-128.png" alt="find a image"/>
 				</label>
 				<label> <img id="showhere" class="icon" onclick="selectImage('showhere');" src="#" alt="" style="visibility: hidden;"/> </label>
 
