@@ -43,19 +43,26 @@
     <button type="button" id="addHabit" onclick="location.href='add.html'" title="add habit">+</button>
     <script type="text/javascript" src="../js/habitList.js"></script>   
     <script type="text/javascript">
+
+
         function showMsg(element){
             var msgElement = (element.parentNode.parentNode.getElementsByClassName("message"))[0];
+            //console.log(msgElement);
             // alert(msgElement.innerHTML);
             var el = element.parentNode.parentNode.getElementsByClassName("message");
-            var items = el[0].id.split("-");
-            console.log(items);
+            var id = el[0].id;
+            console.log(id);
             msgElement.style.visibility="visible";
-            updateFreq(el[0].id,items);
+            updateFreq(id);
         }
+
         function deleteHabit(element){
+            var elId = (element.parentNode.parentNode.getElementsByClassName("message"))[0].id;
             var child = element.parentNode.parentNode;
             var parent = child.parentNode;
             parent.removeChild(child);
+            deleteTheHabit(elId);
+            
         }
     </script>
 </body>

@@ -63,12 +63,12 @@ function saveIt() {
   }
 
 
-  var hour = document.getElementById("hour").value;
+  var hour = Number(document.getElementById("hour").value);
   var ampm = document.getElementById("ampm").value;
   if (document.getElementById("ampm").value == "PM") {
   	if(hour != 12)
   	{
-    	hour = hour * 1 + 12;
+    	hour = hour  + 12;
     }
 
   }
@@ -83,6 +83,9 @@ function saveIt() {
 
   var title = document.getElementById("title").value;
   var time = hour + ":" + min;
+  if(document.getElementById("myonoffswitch").checked == false) {
+    time = null;
+  }
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
   if(!checkedWeek)
   {
@@ -106,9 +109,9 @@ function addHabit(title, perWeek, perDay, notificationTime) {
   var testObject = new TestObject();
   testObject.set("habitName", title);
   testObject.set("freqCount", 0);
-  testObject.set("freqDay", perDay);
+  testObject.set("freqDay", 0);
   testObject.set("freqPerWeek", perWeek)
-  testObject.set("freqSet", 0);
+  testObject.set("freqSet", perDay);
   testObject.set("freqSetMet", 0);
   testObject.set("freqBest", 0);
   testObject.set("notificationTime", notificationTime);
