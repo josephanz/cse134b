@@ -1,7 +1,7 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
 
-function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, completedDayDate, updatedFreqDate, parseObject) {
+function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, completedDayDate, updatedFreqDate, notificationTime, freqPerWeek, parseObject) {
   this.habitId = habitId
   this.habitName = habitName;
   this.iconSource = iconSource;
@@ -12,6 +12,8 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
   this.freqBest = freqBest;
   this.completedDayDate = completedDayDate;
   this.updatedFreqDate = updatedFreqDate;
+  this.notificationTime = notificationTime;
+  this.freqPerWeek = freqPerWeek;
   this.parseObject = parseObject;
   console.log("Parse Object = " + parseObject);
   this.updateField = function(field, newValue, localId) {
@@ -60,7 +62,7 @@ function getHabits() {
         var habitItem = new habit(object.id, object.get("habitName"), object.get("icon").url(),
           object.get("freqCount"), object.get("freqDay"), object.get("freqSet"),
           object.get("freqSetMet"), object.get("freqBest"), object.get("completedDayDate"), 
-          object.get("updatedFreqCount"), object);
+          object.get("updatedFreqCount"), object.get("notificationTime"), object.get("freqPerWeek"),object);
 
         habitsArray[i] = habitItem;
 
@@ -69,6 +71,7 @@ function getHabits() {
       
       console.log(habitsArray)
       displayContent(habitsArray);
+      makeNotifications(habitsArray);
     },
     error: function(model, error) {
       $(".error").show();
@@ -267,15 +270,18 @@ function getTimeDiff(hour, minute, freqPerWeek) {
 function getHabitsForNotifications(habitsArray) {
   var habitsList = [];
   var length = habitsArray.length;
-  var i = 0;
+  var i;
   for(i = 0; i < length; i++) {
       var time = habitsArray[i].notificationTime;
+      if(time == null) {
+        continue;
+      }
       var hourMinute = time.split(":");
       var hour = Number(hourMinute[0]);
       var minute = Number(hourMinute[1]);
       var freqPerWeek = habitsArray[i].freqPerWeek;
       var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
-      if(timeDiff != -1) {
+      if (timeDiff != -1) {
         habitsList.push(habitsArray[i]);
       }
   }

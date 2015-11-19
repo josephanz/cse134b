@@ -63,12 +63,12 @@ function saveIt() {
   }
 
 
-  var hour = document.getElementById("hour").value;
+  var hour = Number(document.getElementById("hour").value);
   var ampm = document.getElementById("ampm").value;
   if (document.getElementById("ampm").value == "PM") {
   	if(hour != 12)
   	{
-    	hour = hour * 1 + 12;
+    	hour = hour  + 12;
     }
 
   }
@@ -83,6 +83,9 @@ function saveIt() {
 
   var title = document.getElementById("title").value;
   var time = hour + ":" + min;
+  if(document.getElementById("myonoffswitch").checked == false) {
+    time = null;
+  }
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
   if(!checkedWeek)
   {
