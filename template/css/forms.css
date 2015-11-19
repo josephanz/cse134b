@@ -5,6 +5,9 @@ html {
 	padding: 0;
 }
 
+
+
+
 body {
   font-family: 'Helvetica', sans-serif;
   background: -webkit-linear-gradient(left top, #666666, #444444) fixed; /* For Safari 5.1 to 6.0 */
@@ -21,6 +24,23 @@ body {
 .titleH {
 	font-size: 17pt;
 }	
+
+
+@media all and (-ms-high-contrast:none)
+{
+     label{
+    display: inline-block;
+    } /* IE10 */
+    
+    label img{
+      pointer-events: none;
+    }
+     *::-ms-backdrop, label img{
+    pointer-events: none;
+} /* IE11 */
+     }
+
+
 
 div.forms {
 	position: relative;
