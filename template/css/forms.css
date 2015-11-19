@@ -110,18 +110,23 @@ img.icon{
 .headerBar {
 	text-align:center;
 	background-color: #333333;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	border-top-right-radius: 20px;
-	border-top-left-radius: 20px;
-
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-top-right-radius: 25px;
+	border-top-left-radius: 25px;
+	padding-right: 30px;
 	color: white;
 	text-shadow: 0px 0px 0px black;
 }
 
 .headerBar button {
-	text-alight: right;
+	line-height: 3.3;
 	float: left; 
+	background: transparent;
+	border: transparent;
+	color: white;
+	margin-left: 20px;
+	font-size: 20px;
 }
 
 
