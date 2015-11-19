@@ -86,14 +86,10 @@ function saveIt(habitId) {
   }
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
 
-  var selectedFile = document.getElementById("upload").files[0];
+  //var selectedFile = document.getElementById("upload").files[0];
   if (title == "" || title == null)
   {
   	alert("please put a habit name");
-  }
-  else if (selectedFile == null)
-  {
-  	alert("please choose an icon");
   }
   else if(!checkedWeek)
   {
@@ -116,6 +112,8 @@ function addHabit(habitId, title, perWeek, perDay, notificationTime) {
   if (habitId !== "" || habitId !== null) {
     console.log ("using id");
     testObject.id = habitId;
+    //if new image blah
+    var parseImg = createImage();
   }
   testObject.set("habitName", title);
   testObject.set("freqCount", 0);
@@ -127,8 +125,7 @@ function addHabit(habitId, title, perWeek, perDay, notificationTime) {
   testObject.set("notificationTime", notificationTime);
 
 
-  //if new image blah
-  var parseImg = createImage();
+
   //  testObject.set("icon", navv.get("icon"));
   testObject.set("icon", parseImg);
   testObject.set("user", Parse.User.current());
@@ -167,7 +164,7 @@ function getIcons() {
 
 function createImage() {
   var fileUploadControl = $("#upload")[0];
-
+  console.log("ddeee" + fileUploadControl);
   if (fileUploadControl.files.length > 0) {
     var file = fileUploadControl.files[0];
 
