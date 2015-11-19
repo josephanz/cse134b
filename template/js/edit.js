@@ -1,6 +1,21 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
+var urlParams;
+(window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
 
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+})();
+
+if (urlParams.habitId === undefined ) {
+  alert("Warning!!! No Habit Selected");
+}
 
 function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, notificationTime, freqPerWeek, parseObject) {
   this.habitId = habitId
@@ -25,7 +40,7 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
 
 function getEditItem() {
   var habitsArray = [];
-  var objectID = "Pr2NC5xGey";
+  var objectID = urlParams.habitId;
   var Habits = Parse.Object.extend("Habits");
   var query = new Parse.Query(Habits);
   query.equalTo("user", Parse.User.current());
@@ -73,17 +88,21 @@ function populateNotificationTime(notificationTime) {
     var hour = time[0];
     var minutes = time[1];
     var amPm;
+    if (hour >= 0 && hour < 12) amPm = "AM";
+    else {
+      amPm = "PM";
+      hour -= 12;
+    }
+    //conver hour to 12 hour clcok
     document.getElementById("hour").value = hour;
     document.getElementById("min").value = minutes;
 
-    if (hour >= 0 && hour < 12) amPm = "AM";
-    else amPm = "PM";
+
     document.getElementById("ampm").value = amPm;
   }
   else {
     document.getElementById("notificationToggle").checked = false;
     document.getElementById("time_selector").style.visibility = "hidden";
-    console.log("ffffff");
   }
 }
 var visible = true;
@@ -102,6 +121,7 @@ function toggle() {
 
 function populateFreqPerDay(dailyFreq) {
   var daily = document.getElementsByName("day");
+  console.log(dailyFreq);
   var index = dailyFreq;
   daily[index].checked = true;
 
@@ -120,14 +140,12 @@ function updateField(habit, field, newValue) {
   habit.set(field, newValue);
   habit.save(null, {
     success: function(gameScore) {
-      console.log("updated field");
     }
   });
 }
 
 
 function getHabitId() {
-  return "Pr2NC5xGey";
-  console.log("returning ID");
+  return urlParams.habitId;
 }
 window.onload = getEditItem();

@@ -102,9 +102,9 @@ function addHabit(habitId, title, perWeek, perDay, notificationTime) {
   }
   testObject.set("habitName", title);
   testObject.set("freqCount", 0);
-  testObject.set("freqDay", perDay);
+  testObject.set("freqDay", 0);
   testObject.set("freqPerWeek", perWeek)
-  testObject.set("freqSet", 0);
+  testObject.set("freqSet", perDay);
   testObject.set("freqSetMet", 0);
   testObject.set("freqBest", 0);
   testObject.set("notificationTime", notificationTime);
