@@ -37,7 +37,7 @@ function toggle() {
 
 
 
-function saveIt() {
+function saveIt(habitId) {
   var week = document.getElementsByName("date");
   var perWeek = [];
   var checkedWeek = false;
@@ -63,18 +63,15 @@ function saveIt() {
   }
 
 
-  var hour = Number(document.getElementById("hour").value);
+  var hour = document.getElementById("hour").value;
   var ampm = document.getElementById("ampm").value;
   if (document.getElementById("ampm").value == "PM") {
-  	if(hour != 12)
-  	{
-    	hour = hour  + 12;
+    if (hour != 12) {
+      hour = hour * 1 + 12;
     }
 
-  }
-  else if(hour == 12)
-  {
-  	hour = 0;
+  } else if (hour == 12) {
+    hour = 0;
   }
 
   var min = document.getElementById("min").value;
@@ -109,14 +106,17 @@ function saveIt() {
   else
   {
 
-	addHabit(title, perWeek, Number(perDay), time);
-
+	addHabit(habitId, title, perWeek, Number(perDay), time);
   }
 }
 
-function addHabit(title, perWeek, perDay, notificationTime) {
+function addHabit(habitId, title, perWeek, perDay, notificationTime) {
   var TestObject = Parse.Object.extend("Habits");
-  var testObject = new TestObject();
+  var testObject  = new TestObject();
+  if (habitId !== "" || habitId !== null) {
+    console.log ("using id");
+    testObject.id = habitId;
+  }
   testObject.set("habitName", title);
   testObject.set("freqCount", 0);
   testObject.set("freqDay", 0);
@@ -184,19 +184,16 @@ function createImage() {
 $(function() {
   $(":file").change(function() {
     if (this.files && this.files[0]) {
-      var reader = new FileReader();  
+      var reader = new FileReader();
       var size = document.getElementById('upload').files[0].size;
-      if (size > 1024*2000)
-      {     
-      	document.getElementById("iconupload").style.color = "red";
-   		document.getElementById("iconupload").innerHTML = "Habit Icon: file size must not exceed 2mb, size is " + size + " bytes";
-      }
-      else 
-      {
+      if (size > 1024 * 2000) {
+        document.getElementById("iconupload").style.color = "red";
+        document.getElementById("iconupload").innerHTML = "Habit Icon: file size must not exceed 2mb, size is " + size + " bytes";
+      } else {
         reader.onload = imageIsLoaded;
         reader.readAsDataURL(this.files[0]);
-  	  }
-	}
+      }
+    }
   });
 });
 
@@ -208,4 +205,3 @@ function imageIsLoaded(e) {
   $('#icon4').attr('src', e.target.result);
   $('#icon4').css({"border": "3px inset #999999"});
 };
-

@@ -68,6 +68,7 @@ function getHabits() {
             object.get("freqSetMet"), object.get("freqBest"), object.get("completedDayDate"),
             object.get("updatedFreqCount"), object.get("notificationTime"), object.get("freqPerWeek"),object);
 
+
         habitsArray[i] = habitItem;
 
       }
@@ -104,15 +105,20 @@ function displayContent(habitsArray){
                     <li><div class="habit-name">'+habitsArray[i]["habitName"]+'</div></li>\
                     <li><img class="habit-icon" src="'+habitsArray[i]["iconSource"]+'" alt="habit icon"></li>\
                 </ul>\
+                <strong id="'+habitsArray[i]["habitId"]+'-completedDayDate" style="visibility: hidden;">'+habitsArray[i]["completedDayDate"]+'</strong>\
+                <strong id="'+habitsArray[i]["habitId"]+'-updatedFreqDate" style="visibility: hidden;">'+habitsArray[i]["updatedFreqDate"]+'</strong>\
                 <div class="message" id='+valuesConcatenatedID+'>\
                     <span class="message-total">\
                         <strong id="'+habitsArray[i]["habitId"]+'-freqDay" style="visibility: hidden;">'+habitsArray[i]["freqDay"]+'</strong>\
                         <strong id="'+habitsArray[i]["habitId"]+'-freqSetMet">'+habitsArray[i]["freqSetMet"]+'</strong> days in a row! Best Record: <strong id="'+habitsArray[i]["habitId"]+'-freqBest">'+habitsArray[i]["freqBest"]+'</strong><br>\
-                        <progress value="1" max="2"></progress>\
+                        <progress id="'+habitsArray[i]["habitId"]+'-progress" value="'+habitsArray[i]["freqCount"]+'" max="'+habitsArray[i]["freqSet"]+'"></progress>\
                     </span><br><br>\
                     <span class="message-today">Completed <strong id="'+habitsArray[i]["habitId"]+'-freqCount">'+habitsArray[i]["freqCount"]+'</strong>/<strong id="'+habitsArray[i]["habitId"]+'-freqSet">'+habitsArray[i]["freqSet"]+'</strong> for today!</span>\
                 </div>\
-                <div class="habit-op">'+checkButton+'\
+                <div class="habit-op">\
+                  <button type="button" id="'+habitsArray[i]["habitId"]+'-checkButton" class="op op-done" onclick="showMsg(this);" title="done">\
+                        <img src="../img/done.svg" alt="Done">\
+                    </button>\
                     <button type="button" class="op op-edit" onclick="location.href='+edit+'" title="edit habit">\
                         <img src="../img/edit.svg" alt="Edit">\
                     </button>\
@@ -134,6 +140,8 @@ function removeHTMLElement(id) {
 }
 
 
+
+
 function updateFreq(id){
   var habitId = id;
   var freqSetMet = parseInt(document.getElementById(habitId + "-freqSetMet").innerHTML);
@@ -141,31 +149,78 @@ function updateFreq(id){
   var freqCount = parseInt(document.getElementById(habitId + "-freqCount").innerHTML);
   var freqSet = parseInt(document.getElementById(habitId + "-freqSet").innerHTML);
   var freqDay = parseInt(document.getElementById(habitId + "-freqDay").innerHTML);
-  var updateList = []
+  var updatedFreqDate = document.getElementById(habitId + "-updatedFreqDate").innerHTML;
+  var completedDayDate = document.getElementById(habitId + "-completedDayDate").innerHTML;
+  var updateList = [];
 
+  var completed;
+  var updated;
+  var currentDate = new Date().toString();
+
+  
+  var l = currentDate.split(" ");
+  currentDate = l[1]+l[2]+l[3];
+  console.log("currentDate = "+ currentDate)
+
+  if(updatedFreqDate != "undefined"){
+    console.log("This one");
+    var l = updatedFreqDate.split(" ");
+    console.log(l);
+    updated = l[1]+l[2]+l[3];
+    console.log(updated);
+  }
+  
+  if(completedDayDate != "undefined"){
+    console.log("NO this one");
+    var l = completedDayDate.split(" ");
+    console.log(l);
+    completed = l[1]+l[2]+l[3];
+    console.log(completed);
+
+  }
+
+
+  if(currentDate != "undefined" && completed != "undefined" && currentDate != completed && currentDate !=updated){
+    console.log("holla at yo homeboy");
+    updateList = [];
+    freqCount =0;
+    document.getElementById(habitId + "-freqCount").innerHTML = freqCount;
+    updateList.push({"key": "freqCount", "val":freqCount});
+    freqDay = 0;
+    document.getElementById(habitId + "-freqDay").innerHTML = freqDay;
+    updateList.push({"key":"freqDay", "val": freqDay});
+    var d = new Date();
+    updateList.push({"key": "updatedFreqDate", "val": d})
+    document.getElementById(habitId + "-updatedFreqDate").innerHTML = d.toString();
+    updateById(habitId,updateList);
+  }
 
   if(freqDay == 0){
-    if(freqCount < freqSet){
-      freqCount +=1;
-      console.log("entered updated count" + freqCount);
-      document.getElementById(habitId + "-freqCount").innerHTML = freqCount;
-      updateList.push({key: "freqCount", "val":freqCount});
-      //update on server
-      if(freqCount == freqSet){
-        removeHTMLElement(habitId+"-checkButton");
-        freqDay = 1;
-        document.getElementById(habitId + "-freqDay").innerHTML = freqDay;
-        updateList.push({"key":"freqDay", "val": freqDay});
-        freqSetMet += 1;
-        document.getElementById(habitId + "-freqSetMet").innerHTML = freqSetMet;
-        updateList.push({"key":"freqSetMet","val": freqSetMet});
-        if(freqSetMet > freqBest){
-          freqBest = freqSetMet;
-          document.getElementById(habitId + "-freqBest").innerHTML = freqBest;
-          updateList.push({"key":"freqBest", "val": freqBest});
+      updateList = [];
+      if(freqCount < freqSet){
+        freqCount +=1; 
+        console.log("entered updated count" + freqCount);
+        document.getElementById(habitId + "-freqCount").innerHTML = freqCount;
+        document.getElementById(habitId + "-progress").value = freqCount;
+        updateList.push({"key": "freqCount", "val":freqCount});
+        //update on server
+        if(freqCount == freqSet){
+          var d = new Date();
+          updateList.push({"key": "completedDayDate", "val": d});
+          removeHTMLElement(habitId+"-checkButton");
+          freqDay = 1;
+          document.getElementById(habitId + "-freqDay").innerHTML = freqDay;
+          updateList.push({"key":"freqDay", "val": freqDay});
+          freqSetMet += 1;
+          document.getElementById(habitId + "-freqSetMet").innerHTML = freqSetMet;
+          updateList.push({"key":"freqSetMet","val": freqSetMet});
+          if(freqSetMet > freqBest){
+            freqBest = freqSetMet;
+            document.getElementById(habitId + "-freqBest").innerHTML = freqBest;
+            updateList.push({"key":"freqBest", "val": freqBest});
 
-        }
-      }
+          }  
+        }  
     }
     updateById(habitId,updateList);
 
