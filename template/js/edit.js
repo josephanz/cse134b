@@ -101,7 +101,7 @@ function populateNotificationTime(notificationTime) {
     document.getElementById("ampm").value = amPm;
   }
   else {
-    document.getElementById("notificationToggle").checked = false;
+    document.getElementById("myonoffswitch").checked = false;
     document.getElementById("time_selector").style.visibility = "hidden";
   }
 }
