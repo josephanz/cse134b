@@ -63,12 +63,12 @@ function saveIt() {
   }
 
 
-  var hour = document.getElementById("hour").value;
+  var hour = Number(document.getElementById("hour").value);
   var ampm = document.getElementById("ampm").value;
   if (document.getElementById("ampm").value == "PM") {
   	if(hour != 12)
   	{
-    	hour = hour * 1 + 12;
+    	hour = hour  + 12;
     }
 
   }
@@ -83,6 +83,9 @@ function saveIt() {
 
   var title = document.getElementById("title").value;
   var time = hour + ":" + min;
+  if(document.getElementById("myonoffswitch").checked == false) {
+    time = null;
+  }
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
   if(!checkedWeek)
   {
@@ -153,6 +156,7 @@ function getIcons() {
 
 function createImage() {
   var fileUploadControl = $("#upload")[0];
+
   if (fileUploadControl.files.length > 0) {
     var file = fileUploadControl.files[0];
 
@@ -187,9 +191,10 @@ $(function() {
 
 
 function imageIsLoaded(e) {
-  //$('#upload').remove();
+  $('#upload').attr('style', "visibility: visibile;");
   $('#icon4').attr('style', "visiblility: visible;");
   $('#icon4').attr('onclick', "selectImage('icon4')");
   $('#icon4').attr('src', e.target.result);
+  $('#icon4').css({"border": "3px inset #999999"});
 };
 
