@@ -17,7 +17,7 @@ body{
 .habit-info{padding:0;margin-left:20px;}
 .habit-info > li{list-style:none; height:100%; padding:0; margin-right:5px; vertical-align: center;}
 .habit-name{margin-left:10px; padding:0; height:100%; display:inline-block; vertical-align: middle; line-height:60px; color:#555; font-size:22px; font-variant:small-caps; font-family:"Lucida Handwriting", cursive;}
-.habit-icon{margin-left:10px; border-radius:50%;width:150px; height:150px;}
+.habit-icon{margin-left:10px; border-radius:50%;width:140px; height:140px;}
 
 .message{position:absolute; display:inline-block; visibility: hidden; text-align:center; color:#888;}
 .message-total{visibility: visible;}
@@ -25,7 +25,7 @@ body{
 
 
 /* operations (for a existing habit) */
-.habit-op{position:absolute; right:-140px; display:inline-block; height: 100%; line-height: 60px;width:100%;text-align:center;top:170px;margin:0 auto;}
+.habit-op{position:absolute; right:-130px; display:inline-block; height: 100%; line-height: 60px;width:100%;text-align:center;top:170px;margin:0 auto;}
 .habit-op img{height: 70%;}
 .op{width:50px; height:50px;margin-right:5px;border-radius: 50%; box-shadow: 0 0 3px gray; padding: 5px; vertical-align: middle;}
 .op:hover{box-shadow: 0 0 5px gray;}
@@ -54,7 +54,9 @@ body{
 @media only screen
     and (max-width: 500px) {
         section{width:350px;margin: 0 auto;}
-        .message{right:5px;bottom:85px;font-size: small;}
+        .message{right:5px;bottom:80px;font-size: small;}
+        .habit-icon{margin-left:10px; border-radius:50%;width:90px; height:90px;}
+        .habit-op{position:absolute; right:5px;display:inline-block; height: 100%; line-height: 60px;width:100%;text-align:center;top:170px;margin:0 auto;}
 }
 
 /* desktop, tablet */
