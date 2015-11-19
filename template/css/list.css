@@ -65,3 +65,7 @@ body{
     section{width:500px;margin: 0 auto;}
     .message{right:60px;bottom:85px;}
 }
+
+progress {
+    width:95%;
+}
