@@ -32,7 +32,7 @@
 		}
 	</style>
 </head>
-<body onload="onDocumentLoad();">
+<body>
     <section>
         <h1>Habit List</h1>
         <ul id="habit-list">
@@ -52,93 +52,11 @@
             msgElement.style.visibility="visible";
             updateFreq(el[0].id,items);
         }
-
         function deleteHabit(element){
             var child = element.parentNode.parentNode;
             var parent = child.parentNode;
             parent.removeChild(child);
         }
-
-		function sendNotification(title, notiBody, notiIcon) {
-			if(Notification.permission !== 'granted') {
-				Notification.requestPermission();
-			}
-			var n  = new Notification(title, {
-				body: notiBody,
-				icon: notiIcon
-			});
-            try {
-    			if(window.external && window.external.msIsSiteMode() !== undefined) {
-    				if(window.external.msIsSiteMode()) {
-    					createPopUp(title, notiBody, notiIcon);
-    				} else {
-    					createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
-    				}
-    			}
-            } catch(ex) {
-                console.log("Site mode is not supported");
-            }
-		}
-
-		function createPopUp(title, notiBody, notiIcon) {
-		console.log("hi");
-			var popup = document.createElement("div");
-			popup.innerHTML = "<strong>" + title + "</strong>" + "<br>" + notiBody;
-			popup.className = 'popup';
-			popup.id = 'popup';
-			popup.style.display = 'none';
-			popup.onclick = function() {
-				$('.popup').fadeOut(400);
-                var element = document.getElementById('popup');
-                console.log(element.parentNode);
-                element.parentNode.removeChild(element);
-			}
-			document.body.appendChild(popup);
-			$('.popup').fadeIn(400);
-		}
-
-        function executeAt(hour, minute, func) {
-            var currentHour  = new Date().getHours();
-            var currentMin = new Date().getMinutes();
-            var milisec = hour * 3600 * 1000 + minute * 60 * 1000;
-            var currentMilisec = currentHour * 3600 * 1000 + currentMin * 60 * 1000;
-            if(currentMilisec > milisec) {
-                console.log("Time is in the past");
-                return false;
-            }
-            var timeDiff = milisec - currentMilisec;
-            console.log("time diff " + timeDiff);
-            setTimeout(func, timeDiff);
-            return true;
-        }
-
-        //set time out functions for notifications
-        function onDocumentLoad() {
-            console.log("onDocumentLoad() called");
-            var i;
-            var index = 0;
-            // var habitList = getHabitList();
-            // var length = habitList.length;
-            var hour = 22;
-            var minute = 40;
-            var length = 20;
-            for(i = 0; i < length; i++) {
-                // var time = habitList[index].time;
-                // var hourMinute = time.split(":");
-                // var hour = Number(hourMinute[0]);
-                // var minute = Number(hourMinute[1]);
-                executeAt(hour, minute--, function(){
-                    //get time, and notification text, image
-                    // var title = habitList[index].habitName;
-                    // var body = "Have you " + title + " today?"
-                    // var icon = habitList[index].iconSource;
-                    // sendNotification(title, body, icon);
-                    sendNotification("test", "this is a test" + index++, "../img/sleep.jpg")
-                    // index++;
-                });
-            }
-        }
-
     </script>
 </body>
 </html>

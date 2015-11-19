@@ -95,7 +95,7 @@ function signUp(email, password) {
 function login(username, password) {
   Parse.User.logIn(username, password, {
     success: function(user) {
-      window.location = ("../src/welcome.html");
+      window.location = ("../src/list.html");
     },
     error: function(user, error) {
         console.log(error.code);

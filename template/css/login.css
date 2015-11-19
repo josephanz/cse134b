@@ -7,15 +7,34 @@ html {
 
 body {
   font-family: 'Helvetica', sans-serif;
-  background: -webkit-linear-gradient(left top, #BBDEFB, #B0C4DE); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right,#BBDEFB, #B0C4DE); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, #BBDEFB, #B0C4DE); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right,  #BBDEFB, #B0C4DE); /* Standard syntax */
+  background: -webkit-linear-gradient(left top, #666666, #444444) fixed; /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right,#666666, #444444) fixed; /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #666666, #444444) fixed ; /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right,  #666666, #444444) fixed; /* Standard syntax */
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
   overflow: hidden;
+}
+
+h2 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid white; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+   margin-top: 80px;
+   margin-bottom: 80px;
+   font-size: 130%;
+   font-weight:100;
+   
+}
+
+h2 span {  
+    padding:0 10px; 
+    background-color: #5b5b5b;
+    font-color: solid white;
 }
 
 .login {
@@ -40,13 +59,16 @@ body {
 }
 
 .login h1 {
-  font-size: 3.5em;
+  font-size: 4em;
   text-align: center;
-  color: #808080;
+  color: #ffffff;
+  -webkit-margin-before: 0.3em;
+  -webkit-margin-after: 0.3em;
+
 }
 
 .login h1 i {
-  color: #333;
+  color: #aaaaaa;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-style: italic;
 }
