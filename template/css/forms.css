@@ -107,7 +107,7 @@ img.icon{
   
 }
 
-h2{
+.headerBar {
 	text-align:center;
 	background-color: #333333;
 	padding-top: 10px;
@@ -118,6 +118,12 @@ h2{
 	color: white;
 	text-shadow: 0px 0px 0px black;
 }
+
+.headerBar button {
+	text-alight: right;
+	float: left; 
+}
+
 
 
 
@@ -192,8 +198,10 @@ div label input {
 }
 
 #ck-button label input {
-    position:absolute;
-    top:-100%;
+    display: block;
+    position: absolute;
+    overflow: auto;
+    visibility: hidden;
 }
 
 #ck-button input:checked + span {
@@ -201,6 +209,7 @@ div label input {
     border-radius:25px;
     color:#fff;
 }
+
 #ck-button input:hover + span {
     cursor: pointer;
 }
@@ -235,8 +244,10 @@ span#times{
 }
 
 #daily-button label input {
-    position:absolute;
-    top:-100%;
+    display: block;
+    position: absolute;
+    overflow: auto;
+    visibility: hidden;
 }
 
 #daily-button input:checked + span {

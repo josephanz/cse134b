@@ -153,6 +153,7 @@ function getIcons() {
 
 function createImage() {
   var fileUploadControl = $("#upload")[0];
+
   if (fileUploadControl.files.length > 0) {
     var file = fileUploadControl.files[0];
 
@@ -187,9 +188,10 @@ $(function() {
 
 
 function imageIsLoaded(e) {
-  //$('#upload').remove();
+  $('#upload').attr('style', "visibility: visibile;");
   $('#icon4').attr('style', "visiblility: visible;");
   $('#icon4').attr('onclick', "selectImage('icon4')");
   $('#icon4').attr('src', e.target.result);
+  $('#icon4').css({"border": "3px inset #999999"});
 };
 
