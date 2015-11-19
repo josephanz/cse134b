@@ -102,6 +102,7 @@ function populateNotificationTime(notificationTime) {
   }
   else {
     document.getElementById("myonoffswitch").checked = false;
+    visible = false;
     document.getElementById("time_selector").style.visibility = "hidden";
   }
 }
