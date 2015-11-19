@@ -64,15 +64,15 @@ function getHabits() {
       for (var i = 0; i < resultLength; i++) {
         var object = results[i];
         var habitItem = new habit(object.id, object.get("habitName"), object.get("icon").url(),
-          object.get("freqCount"), object.get("freqDay"), object.get("freqSet"),
-          object.get("freqSetMet"), object.get("freqBest"), object.get("completedDayDate"), 
-          object.get("updatedFreqCount"), object.get("notificationTime"), object.get("freqPerWeek"),object);
+            object.get("freqCount"), object.get("freqDay"), object.get("freqSet"),
+            object.get("freqSetMet"), object.get("freqBest"), object.get("completedDayDate"),
+            object.get("updatedFreqCount"), object.get("notificationTime"), object.get("freqPerWeek"),object);
 
         habitsArray[i] = habitItem;
 
       }
       //alert("Successfully retrieved " + habitsArray.length);
-      
+
       console.log(habitsArray)
       displayContent(habitsArray);
       makeNotifications(habitsArray);
@@ -84,13 +84,13 @@ function getHabits() {
 }
 
 function displayContent(habitsArray){
-  
+
   var habitsArrayLen = habitsArray.length;
   console.log(habitsArray);
   console.log("here " +habitsArrayLen);
-  var i; 
+  var i;
   for(i = 0; i< habitsArrayLen; i++){
-    valuesConcatenatedID = habitsArray[i]["habitId"]; 
+    valuesConcatenatedID = habitsArray[i]["habitId"];
     var edit = "'../src/edit.html?id="+habitsArray[i]["habitId"]+"'"
     var checkButton = ""
     if(habitsArray[i]["freqDay"] == 0&&habitsArray[i]["freqSet"] > habitsArray[i]["freqCount"]){
@@ -122,22 +122,22 @@ function displayContent(habitsArray){
                 </div>\
             </li>';
 
-            
-    
+
+
   }
 
 }
 
 function removeHTMLElement(id) {
-  
-    return (elem=document.getElementById(id)).parentNode.removeChild(elem);
+
+  return (elem=document.getElementById(id)).parentNode.removeChild(elem);
 }
 
 
 function updateFreq(id){
   var habitId = id;
   var freqSetMet = parseInt(document.getElementById(habitId + "-freqSetMet").innerHTML);
-  var freqBest = parseInt(document.getElementById(habitId + "-freqBest").innerHTML); 
+  var freqBest = parseInt(document.getElementById(habitId + "-freqBest").innerHTML);
   var freqCount = parseInt(document.getElementById(habitId + "-freqCount").innerHTML);
   var freqSet = parseInt(document.getElementById(habitId + "-freqSet").innerHTML);
   var freqDay = parseInt(document.getElementById(habitId + "-freqDay").innerHTML);
@@ -145,41 +145,41 @@ function updateFreq(id){
 
 
   if(freqDay == 0){
-      if(freqCount < freqSet){
-        freqCount +=1; 
-        console.log("entered updated count" + freqCount);
-        document.getElementById(habitId + "-freqCount").innerHTML = freqCount;
-        updateList.push({key: "freqCount", "val":freqCount});
-        //update on server
-        if(freqCount == freqSet){
-          removeHTMLElement(habitId+"-checkButton");
-          freqDay = 1;
-          document.getElementById(habitId + "-freqDay").innerHTML = freqDay;
-          updateList.push({"key":"freqDay", "val": freqDay});
-          freqSetMet += 1;
-          document.getElementById(habitId + "-freqSetMet").innerHTML = freqSetMet;
-          updateList.push({"key":"freqSetMet","val": freqSetMet});
-          if(freqSetMet > freqBest){
-            freqBest = freqSetMet;
-            document.getElementById(habitId + "-freqBest").innerHTML = freqBest;
-            updateList.push({"key":"freqBest", "val": freqBest});
+    if(freqCount < freqSet){
+      freqCount +=1;
+      console.log("entered updated count" + freqCount);
+      document.getElementById(habitId + "-freqCount").innerHTML = freqCount;
+      updateList.push({key: "freqCount", "val":freqCount});
+      //update on server
+      if(freqCount == freqSet){
+        removeHTMLElement(habitId+"-checkButton");
+        freqDay = 1;
+        document.getElementById(habitId + "-freqDay").innerHTML = freqDay;
+        updateList.push({"key":"freqDay", "val": freqDay});
+        freqSetMet += 1;
+        document.getElementById(habitId + "-freqSetMet").innerHTML = freqSetMet;
+        updateList.push({"key":"freqSetMet","val": freqSetMet});
+        if(freqSetMet > freqBest){
+          freqBest = freqSetMet;
+          document.getElementById(habitId + "-freqBest").innerHTML = freqBest;
+          updateList.push({"key":"freqBest", "val": freqBest});
 
-          }  
-        }  
+        }
       }
-      updateById(habitId,updateList);
+    }
+    updateById(habitId,updateList);
 
-  }   
+  }
 
 }
 
 function updateById(id,list){
   var Point = Parse.Object.extend("Habits");
   var point = new Point();
-  point.id = id; 
+  point.id = id;
   var i;
   console.log(list);
-  for(i in list){  
+  for(i in list){
     point.set(list[i].key, list[i].val);//parseInt(items[3])+1);
     console.log(list[i].key +","+list[i].val);
   }
@@ -188,7 +188,7 @@ function updateById(id,list){
     success: function(point) {
       // Saved successfully.
       console.log("updated");
-   
+
     },
     error: function(point, error) {
       // The save failed.
@@ -208,17 +208,17 @@ function sendNotification(title, notiBody, notiIcon) {
     body: notiBody,
     icon: notiIcon
   });
-        try {
-      if(window.external && window.external.msIsSiteMode() !== undefined) {
-        if(window.external.msIsSiteMode()) {
-          createPopUp(title, notiBody, notiIcon);
-        } else {
-          createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
-        }
+  try {
+    if(window.external && window.external.msIsSiteMode() !== undefined) {
+      if(window.external.msIsSiteMode()) {
+        createPopUp(title, notiBody, notiIcon);
+      } else {
+        createPopUp("Enable Notification", "Please pin the site to enable notifications", "");
       }
-        } catch(ex) {
-            console.log("Site mode is not supported");
-        }
+    }
+  } catch(ex) {
+    console.log("Site mode is not supported");
+  }
 }
 
 function createPopUp(title, notiBody, notiIcon) {
@@ -229,19 +229,19 @@ function createPopUp(title, notiBody, notiIcon) {
   popup.style.display = 'none';
   popup.onclick = function() {
     $('.popup').fadeOut(400);
-        var element = document.getElementById('popup');
-        console.log(element.parentNode);
-        element.parentNode.removeChild(element);
+    var element = document.getElementById('popup');
+    console.log(element.parentNode);
+    element.parentNode.removeChild(element);
   }
   document.body.appendChild(popup);
   $('.popup').fadeIn(400);
 }
 
 function executeAt(hour, minute, freqPerWeek, func) {
-    var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
-    if(timeDiff != -1) {
-      setTimeout(func, timeDiff);
-    }
+  var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
+  if(timeDiff != -1) {
+    setTimeout(func, timeDiff);
+  }
 }
 
 function compare(a, b) {
@@ -253,24 +253,25 @@ function compare(a, b) {
 }
 
 function getTimeDiff(hour, minute, freqPerWeek) {
-    var currentDay = new Date().getDay();
-    var currentHour = new Date().getHours();
-    var currentMin = new Date().getMinutes();
-    if(freqPerWeek[currentDay] == true) {
-      var milisec = hour * 3600 * 1000 + minute * 60 * 1000;
-      var currentMilisec = currentHour * 3600 * 1000 + currentMin * 60 * 1000;
-      if(currentMilisec > milisec) {
-        console.log("Time is in the past");
-        return -1;
-      } else {
-        console.log("Valid time");
-        console.log(milisec - currentMilisec);
-        return milisec - currentMilisec;
-      }
-    } else {
-      console.log("Not today");
+  var currentDay = new Date().getDay();
+  var currentHour = new Date().getHours();
+  var currentMin = new Date().getMinutes();
+  if(freqPerWeek[currentDay] == true) {
+    var milisec = hour * 3600 * 1000 + minute * 60 * 1000;
+    var currentMilisec = currentHour * 3600 * 1000 + currentMin * 60 * 1000;
+    if(currentMilisec > milisec) {
+      console.log("Time is in the past");
+      console.log(hour + ":" + minute);
       return -1;
+    } else {
+      console.log("Valid time");
+      console.log(milisec - currentMilisec);
+      return milisec - currentMilisec;
     }
+  } else {
+    console.log("Not today");
+    return -1;
+  }
 }
 
 function getHabitsForNotifications(habitsArray) {
@@ -278,18 +279,18 @@ function getHabitsForNotifications(habitsArray) {
   var length = habitsArray.length;
   var i;
   for(i = 0; i < length; i++) {
-      var time = habitsArray[i].notificationTime;
-      if(time == null) {
-        continue;
-      }
-      var hourMinute = time.split(":");
-      var hour = Number(hourMinute[0]);
-      var minute = Number(hourMinute[1]);
-      var freqPerWeek = habitsArray[i].freqPerWeek;
-      var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
-      if (timeDiff != -1) {
-        habitsList.push(habitsArray[i]);
-      }
+    var time = habitsArray[i].notificationTime;
+    if(time == null) {
+      continue;
+    }
+    var hourMinute = time.split(":");
+    var hour = Number(hourMinute[0]);
+    var minute = Number(hourMinute[1]);
+    var freqPerWeek = habitsArray[i].freqPerWeek;
+    var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
+    if (timeDiff != -1) {
+      habitsList.push(habitsArray[i]);
+    }
   }
   return habitsList;
 }
@@ -319,7 +320,7 @@ function makeNotifications(habitsArray) {
       sendNotification(title, body, icon);
       index++;
     });
-  } 
+  }
 }
 
 getHabits();
