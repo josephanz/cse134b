@@ -83,11 +83,22 @@ function saveIt() {
 
   var title = document.getElementById("title").value;
   var time = hour + ":" + min;
+
   if(document.getElementById("myonoffswitch").checked == false) {
     time = null;
   }
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
-  if(!checkedWeek)
+
+  var selectedFile = document.getElementById("upload").files[0];
+  if (title == "" || title == null)
+  {
+  	alert("please put a habit name");
+  }
+  else if (selectedFile == null)
+  {
+  	alert("please choose an icon");
+  }
+  else if(!checkedWeek)
   {
   	alert("please select weekly frequency");
   }
@@ -98,10 +109,9 @@ function saveIt() {
   else
   {
 
-	  addHabit(title, perWeek, Number(perDay), time);
-	  console.log(document.getElementById("title").value);
+	addHabit(title, perWeek, Number(perDay), time);
+
   }
-  //document.location.href = "list.html";
 }
 
 function addHabit(title, perWeek, perDay, notificationTime) {
@@ -127,6 +137,7 @@ function addHabit(title, perWeek, perDay, notificationTime) {
     success: function(object) {
       $(".success").show();
       alert("Successfully stored" + object);
+      document.location.href = "list.html";
     },
     error: function(model, error) {
       $(".error").show();
