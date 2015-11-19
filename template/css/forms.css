@@ -5,6 +5,9 @@ html {
 	padding: 0;
 }
 
+
+
+
 body {
   font-family: 'Helvetica', sans-serif;
   background: -webkit-linear-gradient(left top, #666666, #444444) fixed; /* For Safari 5.1 to 6.0 */
@@ -21,6 +24,23 @@ body {
 .titleH {
 	font-size: 17pt;
 }	
+
+
+@media all and (-ms-high-contrast:none)
+{
+     label{
+    display: inline-block;
+    } /* IE10 */
+    
+    label img{
+      pointer-events: none;
+    }
+     *::-ms-backdrop, label img{
+    pointer-events: none;
+} /* IE11 */
+     }
+
+
 
 div.forms {
 	position: relative;
@@ -107,17 +127,28 @@ img.icon{
   
 }
 
-h2{
+.headerBar {
 	text-align:center;
 	background-color: #333333;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	border-top-right-radius: 20px;
-	border-top-left-radius: 20px;
-
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-top-right-radius: 25px;
+	border-top-left-radius: 25px;
+	padding-right: 30px;
 	color: white;
 	text-shadow: 0px 0px 0px black;
 }
+
+.headerBar button {
+	line-height: 3.3;
+	float: left; 
+	background: transparent;
+	border: transparent;
+	color: white;
+	margin-left: 20px;
+	font-size: 20px;
+}
+
 
 
 
@@ -192,8 +223,10 @@ div label input {
 }
 
 #ck-button label input {
-    position:absolute;
-    top:-100%;
+    display: block;
+    position: absolute;
+    overflow: auto;
+    visibility: hidden;
 }
 
 #ck-button input:checked + span {
@@ -201,6 +234,7 @@ div label input {
     border-radius:25px;
     color:#fff;
 }
+
 #ck-button input:hover + span {
     cursor: pointer;
 }
@@ -235,8 +269,10 @@ span#times{
 }
 
 #daily-button label input {
-    position:absolute;
-    top:-100%;
+    display: block;
+    position: absolute;
+    overflow: auto;
+    visibility: hidden;
 }
 
 #daily-button input:checked + span {
