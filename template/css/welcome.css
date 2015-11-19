@@ -3,12 +3,15 @@ html {
 	width: 100%;
 	margin: 0;
 	padding: 0;	
-	background-color: #BBDEFB;
+
 }
 
 body {
   font-family: 'Helvetica', sans-serif;
-  
+  background: -webkit-linear-gradient(left top, #666666, #444444) fixed; /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right,#666666, #444444) fixed; /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #666666, #444444) fixed ; /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right,  #666666, #444444) fixed; /* Standard syntax */  
   height: 100%;
   width: 100%;
   padding: 0;
@@ -36,11 +39,46 @@ i  {
   transform: translate(-50%, -75%); */
 }
 
-.welcome h1 {
+/* .welcome h1 {
 	text-align: center;
 	color: #808080;
 	font-size: 3.5em;
 	
+} */
+
+.welcome h1 {
+  font-size: 4em;
+  text-align: center;
+  color: #ffffff;
+  -webkit-margin-before: 0.3em;
+  -webkit-margin-after: 0.3em;
+
+}
+
+.welcome h1 i {
+  color: #aaaaaa;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-style: italic;
+}
+
+.welcome h2 {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid white; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+   margin-top: 100px;
+   margin-bottom: 160px;
+   font-size: 130%;
+   font-weight:100;
+   
+} 
+
+.welcome h2 span { 
+    color: white; 
+    padding:0 10px; 
+    background-color: #5b5b5b;
+  
 }
 
 /* mobile version*/
@@ -66,26 +104,6 @@ i  {
 }
 
 
-
-.welcome h2 {
-   width: 100%; 
-   text-align: center; 
-   border-bottom: 1px solid #000; 
-   line-height: 0.1em;
-   margin: 10px 0 20px; 
-   margin-top: 100px;
-   margin-bottom: 160px;
-   font-size: 130%;
-   font-weight:100;
-   
-} 
-
-.welcome h2 span { 
-    background:#fff; 
-    padding:0 10px; 
-	background-color: #BBDEFB;
-	
-}
 p#add{
 	text-align:center;
 	
@@ -97,7 +115,7 @@ p#add{
 	margin: 0;
 	padding: 15px;
 	background:none;
-	background-color: #214864;
+	background-color: #4d6c83;
   border:none;
   color:white;
   -webkit-border-radius: 5px; /*For Safari, etc. */
