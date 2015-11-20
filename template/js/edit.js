@@ -288,6 +288,10 @@ function getIcons() {
   });
 }
 
+function setImageForIcon() {
+  imageForIcon = undefined;
+}
+
 function createImage() {
   if (imageForIcon == undefined)
     return undefined;
@@ -323,7 +327,19 @@ $(function() {
   });
 });
 
+function selectImage(name) {
+  //Clear all the other effects
+  var arr = document.getElementsByClassName("icon");
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].style.border = "3px inset rgba(0,0,0,0)";
+  }
+  //document.getElementById('icon2').style.border = "3px inset rgba(0,0,0,0)";
+  //document.getElementById('icon3').style.border = "3px inset rgba(0,0,0,0)";
+  var image = document.getElementById(name);
 
+  image.style.border = "3px inset #999999";
+  imageForIcon = undefined;
+}
 function imageIsLoaded(e) {
   $('#upload').attr('style', "visibility: visibile;");
   $('#icon4').attr('style', "visiblility: visible;");
