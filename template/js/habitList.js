@@ -41,7 +41,6 @@ function deleteTheHabit(id) {
     success: function(myObj) {
       // The object was retrieved successfully.
       myObj.destroy({});
-      clearTimeout(notificationList[id]);
       console.log("should have deleted");
       //location.reload();  //reload the page for the notification to go away
     },
@@ -298,8 +297,7 @@ function createPopUp(title, notiBody, notiIcon) {
 function executeAt(hour, minute, freqPerWeek, habitId, func) {
   var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
   if(timeDiff != -1) {
-    var noti = setTimeout(func, timeDiff);
-    notificationList[habitId] = noti;
+    setTimeout(func, timeDiff);
   }
 }
 
@@ -354,8 +352,6 @@ function getHabitsForNotifications(habitsArray) {
   return habitsList;
 }
 
-var notificationList = [];
-
 //set time out functions for notifications
 function makeNotifications(habitsArray) {
   console.log("makeNotifications() called");
@@ -373,13 +369,32 @@ function makeNotifications(habitsArray) {
     var habitId = habitsList[i].habitId;
     console.log("time: " + time + " habit: " + habitsList[i].habitName);
     console.log(habitsList[i].freqPerWeek);
-
+    console.log(habitsList[i].habitId);
     executeAt(hour, minute, days, habitId, function() {
       var title = habitsList[index].habitName;
       var body = "Have you " + title + " today?";
       var icon = habitsList[index].iconSource;
-      sendNotification(title, body, icon);
+      var Habits = Parse.Object.extend("Habits");
+      var query = new Parse.Query(Habits);
+      query.equalTo("user", Parse.User.current());
+      console.log("habitId " + habitsList[index].habitId);
+      query.equalTo("objectId", habitsList[index].habitId);
       index++;
+      query.find({
+        success: function(results) {
+          console.log("results length " + results.length);
+          if(results.length != 0) {
+            sendNotification(title, body, icon);
+          } else {
+            console.log("dont send notification");
+          }
+
+        },
+        error: function(model, error) {
+          console.log("failed");
+        }
+      });
+        //sendNotification(title, body, icon);
     });
   }
 }
