@@ -331,54 +331,32 @@ function getTimeDiff(hour, minute, freqPerWeek) {
   }
 }
 
-function getHabitsForNotifications(habitsArray) {
-  var habitsList = [];
-  var length = habitsArray.length;
-  var i;
-  for(i = 0; i < length; i++) {
-    var time = habitsArray[i].notificationTime;
-    if(time == null) {
-      continue;
-    }
-    var hourMinute = time.split(":");
-    var hour = Number(hourMinute[0]);
-    var minute = Number(hourMinute[1]);
-    var freqPerWeek = habitsArray[i].freqPerWeek;
-    var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
-    if (timeDiff != -1) {
-      habitsList.push(habitsArray[i]);
-    }
-  }
-  return habitsList;
-}
-
 //set time out functions for notifications
 function makeNotifications(habitsArray) {
   console.log("makeNotifications() called");
-  var habitsList = getHabitsForNotifications(habitsArray);
-  habitsList.sort(compare);
+  habitsArray.sort(compare);
   var i;
-  var length = habitsList.length;
+  var length = habitsArray.length;
   var index = 0;
   for(i = 0; i < length; i++) {
-    var days = habitsList[i].freqPerWeek;
-    var time = habitsList[i].notificationTime;
+    var days = habitsArray[i].freqPerWeek;
+    var time = habitsArray[i].notificationTime;
     var hourMinute = time.split(":");
     var hour = Number(hourMinute[0]);
     var minute = Number(hourMinute[1]);
-    var habitId = habitsList[i].habitId;
-    console.log("time: " + time + " habit: " + habitsList[i].habitName);
-    console.log(habitsList[i].freqPerWeek);
-    console.log(habitsList[i].habitId);
+    var habitId = habitsArray[i].habitId;
+    console.log("time: " + time + " habit: " + habitsArray[i].habitName);
+    console.log(habitsArray[i].freqPerWeek);
+    console.log(habitsArray[i].habitId);
     executeAt(hour, minute, days, habitId, function() {
-      var title = habitsList[index].habitName;
+      var title = habitsArray[index].habitName;
       var body = "Have you " + title + " today?";
-      var icon = habitsList[index].iconSource;
+      var icon = habitsArray[index].iconSource;
       var Habits = Parse.Object.extend("Habits");
       var query = new Parse.Query(Habits);
       query.equalTo("user", Parse.User.current());
-      console.log("habitId " + habitsList[index].habitId);
-      query.equalTo("objectId", habitsList[index].habitId);
+      console.log("habitId " + habitsArray[index].habitId);
+      query.equalTo("objectId", habitsArray[index].habitId);
       index++;
       query.find({
         success: function(results) {
@@ -388,13 +366,11 @@ function makeNotifications(habitsArray) {
           } else {
             console.log("dont send notification");
           }
-
         },
         error: function(model, error) {
           console.log("failed");
         }
       });
-        //sendNotification(title, body, icon);
     });
   }
 }
