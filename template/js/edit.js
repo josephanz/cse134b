@@ -90,20 +90,47 @@ function populateNotificationTime(notificationTime) {
     var time = notificationTime.split(":");
     var hour = time[0];
     var minutes = time[1];
-    var amPm;
-    if (hour == 0) hour = 12;
-    if (hour >= 1 && hour <= 12)
-      amPm = "AM";
-    else {
-      amPm = "PM";
-      hour -= 12;
+    var hourIndex;
+    var minIndex;
+    var amPmIndex;
+
+    if (hour == 0){
+      amPmIndex = 0;
+      hourIndex = 11;
     }
+    else if (hour >= 1 && hour < 12){
+      amPmIndex = 0;
+      hourIndex = hour - 1;
+    }
+    else if (hour == 12){
+      amPmIndex = 1;
+      hourIndex = 11;
+    }
+    else {
+      amPmIndex = 1;
+      hourIndex = (hour - 12) - 1;
+    }
+    if(minutes == 15){
+      minIndex = 1;
+    }
+    else if(minutes == 30){
+      minIndex = 2;
+    }
+    else if(minutes == 45){
+      minIndex = 3;
+    }
+    else{
+      minIndex = 0;
+    }
+    
     //conver hour to 12 hour clcok
-    document.getElementById("hour").value = hour;
-    document.getElementById("min").value = minutes;
-
-
-    document.getElementById("ampm").value = amPm;
+    var dropDownHour = document.getElementById('hour');
+    var dropDownMinute = document.getElementById('min');
+    var dropDownAmPm = document.getElementById('ampm');
+    dropDownHour.options[hourIndex].selected='true';
+    dropDownMinute.options[minIndex].selected='true';
+    dropDownAmPm.options[amPmIndex].selected='true'; 
+    
   } else {
     document.getElementById("myonoffswitch").checked = false;
     visible = false;
