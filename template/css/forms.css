@@ -141,7 +141,7 @@ img.icon{
 	text-shadow: 0px 0px 0px black;
 }
 
-.headerBar button {
+.headerBar a {
 	line-height: 3.3;
 	float: left; 
 	background: transparent;
@@ -149,6 +149,7 @@ img.icon{
 	color: white;
 	margin-left: 20px;
 	font-size: 20px;
+	text-decoration: none;
 }
 
 
