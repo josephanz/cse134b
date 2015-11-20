@@ -218,7 +218,7 @@ div label input {
     /*padding-top: 6px;*/
     display:block;
     /*border:1px solid #D0D0D0;*/
-    overflow:auto;
+    overflow:hidden;
 
 }
 
