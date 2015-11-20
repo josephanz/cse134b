@@ -30,15 +30,17 @@ body {
 {
      label{
     display: inline-block;
-    } /* IE10 */
+    cursor: pointer;
+    cursor: hand;
+    }
     
     label img{
       pointer-events: none;
     }
      *::-ms-backdrop, label img{
     pointer-events: none;
-} /* IE11 */
-     }
+}
+}
 
 
 
@@ -153,7 +155,7 @@ img.icon{
 
 
 img.icon:hover{
-	-webkit-transform: scale(1.1);
+	/*-webkit-transform: scale(1.1);*/
 	transform: scale(1.1);
 	cursor: pointer;
 }
