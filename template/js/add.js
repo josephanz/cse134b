@@ -37,7 +37,7 @@ function toggle() {
 
 
 
-function saveIt(habitId) {
+function saveIt() {
   var week = document.getElementsByName("date");
   var perWeek = [];
   var checkedWeek = false;
@@ -102,19 +102,16 @@ function saveIt(habitId) {
   else
   {
 
-	addHabit(habitId, title, perWeek, Number(perDay), time);
+	addHabit(title, perWeek, Number(perDay), time);
   }
 }
 
-function addHabit(habitId, title, perWeek, perDay, notificationTime) {
+function addHabit(title, perWeek, perDay, notificationTime) {
   var TestObject = Parse.Object.extend("Habits");
   var testObject  = new TestObject();
-  if (habitId !== "" || habitId !== null) {
-    console.log ("using id");
-    testObject.id = habitId;
-    //if new image blah
-    var parseImg = createImage();
-  }
+  //if new image
+  var parseImg = createImage();
+
   testObject.set("habitName", title);
   testObject.set("freqCount", 0);
   testObject.set("freqDay", 0);
@@ -124,9 +121,6 @@ function addHabit(habitId, title, perWeek, perDay, notificationTime) {
   testObject.set("freqBest", 0);
   testObject.set("notificationTime", notificationTime);
 
-
-
-  //  testObject.set("icon", navv.get("icon"));
   testObject.set("icon", parseImg);
   testObject.set("user", Parse.User.current());
   testObject.setACL(new Parse.ACL(Parse.User.current()));
@@ -165,18 +159,16 @@ function getIcons() {
 function createImage() {
   var fileUploadControl = $("#upload")[0];
   console.log("ddeee" + fileUploadControl);
-  if (fileUploadControl.files.length > 0) {
-    var file = fileUploadControl.files[0];
-
+  //if (fileUploadControl.files.length > 0) {
+    var file = imageForIcon;
+    console.log("icon" + file);
     var name = "photo.jpg";
     var parseFile = new Parse.File(name, file);
-    /*    parseFile.save().then(function() {			return parseFile;
-    		}, function(error) {
-    			return null;
-    		}); */
-  }
+
   return parseFile;
 }
+
+var imageForIcon; //updated in teh listner and used to craeteImage
 
 $(function() {
   $(":file").change(function() {
@@ -188,6 +180,8 @@ $(function() {
         document.getElementById("iconupload").innerHTML = "Habit Icon: file size must not exceed 2mb, size is " + size + " bytes";
       } else {
         reader.onload = imageIsLoaded;
+        console.log("dyb dyb" + this.files[0]);
+        imageForIcon = this.files[0];
         reader.readAsDataURL(this.files[0]);
       }
     }
