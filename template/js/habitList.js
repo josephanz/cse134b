@@ -41,6 +41,7 @@ function deleteTheHabit(id) {
     success: function(myObj) {
       // The object was retrieved successfully.
       myObj.destroy({});
+      clearTimeout(notificationList[id]);
       console.log("should have deleted");
       //location.reload();  //reload the page for the notification to go away
     },
@@ -294,10 +295,11 @@ function createPopUp(title, notiBody, notiIcon) {
   $('.popup').fadeIn(400);
 }
 
-function executeAt(hour, minute, freqPerWeek, func) {
+function executeAt(hour, minute, freqPerWeek, habitId, func) {
   var timeDiff = getTimeDiff(hour, minute, freqPerWeek);
   if(timeDiff != -1) {
-    setTimeout(func, timeDiff);
+    var noti = setTimeout(func, timeDiff);
+    notificationList[habitId] = noti;
   }
 }
 
@@ -352,6 +354,8 @@ function getHabitsForNotifications(habitsArray) {
   return habitsList;
 }
 
+var notificationList = [];
+
 //set time out functions for notifications
 function makeNotifications(habitsArray) {
   console.log("makeNotifications() called");
@@ -366,11 +370,11 @@ function makeNotifications(habitsArray) {
     var hourMinute = time.split(":");
     var hour = Number(hourMinute[0]);
     var minute = Number(hourMinute[1]);
-
+    var habitId = habitsList[i].habitId;
     console.log("time: " + time + " habit: " + habitsList[i].habitName);
     console.log(habitsList[i].freqPerWeek);
 
-    executeAt(hour, minute, days, function() {
+    executeAt(hour, minute, days, habitId, function() {
       var title = habitsList[index].habitName;
       var body = "Have you " + title + " today?";
       var icon = habitsList[index].iconSource;
