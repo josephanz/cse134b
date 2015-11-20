@@ -28,7 +28,7 @@ body {
 
 @media all and (-ms-high-contrast:none)
 {
-     label{
+    label{
     display: inline-block;
     cursor: pointer;
     cursor: hand;
@@ -79,6 +79,7 @@ input#others{
 	width: 250px;
 	font-size:medium;
 }
+
 img.icon{
 	width: 80px;
 	height: 80px;
@@ -156,7 +157,7 @@ img.icon{
 
 
 img.icon:hover{
-	/*-webkit-transform: scale(1.1);*/
+	-webkit-transform: scale(1.1);
 	transform: scale(1.1);
 	cursor: pointer;
 }
