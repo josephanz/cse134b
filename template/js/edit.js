@@ -90,20 +90,47 @@ function populateNotificationTime(notificationTime) {
     var time = notificationTime.split(":");
     var hour = time[0];
     var minutes = time[1];
-    var amPm;
-    if (hour == 0) hour = 12;
-    if (hour >= 1 && hour <= 12)
-      amPm = "AM";
-    else {
-      amPm = "PM";
-      hour -= 12;
+    var hourIndex;
+    var minIndex;
+    var amPmIndex;
+
+    if (hour == 0){
+      amPmIndex = 0;
+      hourIndex = 11;
     }
+    else if (hour >= 1 && hour < 12){
+      amPmIndex = 0;
+      hourIndex = hour - 1;
+    }
+    else if (hour == 12){
+      amPmIndex = 1;
+      hourIndex = 11;
+    }
+    else {
+      amPmIndex = 1;
+      hourIndex = (hour - 12) - 1;
+    }
+    if(minutes == 15){
+      minIndex = 1;
+    }
+    else if(minutes == 30){
+      minIndex = 2;
+    }
+    else if(minutes == 45){
+      minIndex = 3;
+    }
+    else{
+      minIndex = 0;
+    }
+    
     //conver hour to 12 hour clcok
-    document.getElementById("hour").value = hour;
-    document.getElementById("min").value = minutes;
-
-
-    document.getElementById("ampm").value = amPm;
+    var dropDownHour = document.getElementById('hour');
+    var dropDownMinute = document.getElementById('min');
+    var dropDownAmPm = document.getElementById('ampm');
+    dropDownHour.options[hourIndex].selected='true';
+    dropDownMinute.options[minIndex].selected='true';
+    dropDownAmPm.options[amPmIndex].selected='true'; 
+    
   } else {
     document.getElementById("myonoffswitch").checked = false;
     visible = false;
@@ -259,7 +286,7 @@ function addHabit(habitId, title, perWeek, perDay, notificationTime) {
   testObject.save(null, {
     success: function(object) {
       $(".success").show();
-      alert("Successfully stored" + object);
+    
       document.location.href = "list.html";
     },
     error: function(model, error) {
@@ -308,7 +335,7 @@ function createImage() {
 }
 
 var imageForIcon; //updated in teh listner and used to craeteImage
-
+var imageRecovery;
 $(function() {
   $(":file").change(function() {
     if (this.files && this.files[0]) {
@@ -321,7 +348,9 @@ $(function() {
         reader.onload = imageIsLoaded;
         console.log("dyb dyb" + this.files[0]);
         imageForIcon = this.files[0];
+        imageRecovery = this.files[0];
         reader.readAsDataURL(this.files[0]);
+
       }
     }
   });
@@ -339,12 +368,23 @@ function selectImage(name) {
 
   image.style.border = "3px inset #999999";
   imageForIcon = undefined;
+
+  if (name === "newicon") imageForIcon = imageRecovery;
+  else imageForIcon = undefined;
+}
+function insertImage(imageSrc) {
+  var iconTag = document.getElementById("testme");
+  var imageId = "onclick=selectImage('newicon') />";
+  iconTag.innerHTML = ' \
+                  <img id = "newicon"  class="icon" src='+imageSrc+' '+imageId+' ';
+
 }
 function imageIsLoaded(e) {
   $('#upload').attr('style', "visibility: visibile;");
   $('#icon4').attr('style', "visiblility: visible;");
   $('#icon4').attr('onclick', "selectImage('icon4')");
-  $('#icon4').attr('src', e.target.result);
+  insertImage(e.target.result);
+  //$('#icon4').attr('src', e.target.result);
   $('#icon4').css({
     "border": "3px inset #999999"
   });

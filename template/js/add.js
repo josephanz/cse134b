@@ -127,7 +127,6 @@ function addHabit(title, perWeek, perDay, notificationTime) {
   testObject.save(null, {
     success: function(object) {
       $(".success").show();
-      alert("Successfully stored" + object);
       document.location.href = "list.html";
     },
     error: function(model, error) {
