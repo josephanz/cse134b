@@ -14,7 +14,7 @@ body {
   background: -o-linear-gradient(bottom right,#666666, #444444) fixed; /* For Opera 11.1 to 12.0 */
   background: -moz-linear-gradient(bottom right, #666666, #444444) fixed ; /* For Firefox 3.6 to 15 */
   background: linear-gradient(to bottom right,  #666666, #444444) fixed; /* Standard syntax */
-  background-color: black;
+  background-color: #444444;
   height: 100%;
   width: 100%;
   padding: 0;
@@ -28,17 +28,19 @@ body {
 
 @media all and (-ms-high-contrast:none)
 {
-     label{
+    label{
     display: inline-block;
-    } /* IE10 */
+    cursor: pointer;
+    cursor: hand;
+    }
     
     label img{
       pointer-events: none;
     }
      *::-ms-backdrop, label img{
     pointer-events: none;
-} /* IE11 */
-     }
+}
+}
 
 
 
@@ -77,6 +79,7 @@ input#others{
 	width: 250px;
 	font-size:medium;
 }
+
 img.icon{
 	width: 80px;
 	height: 80px;
@@ -129,7 +132,7 @@ img.icon{
 
 .headerBar {
 	text-align:center;
-	background-color: #333333;
+	background-color: #465154;
 	padding-top: 3px;
 	padding-bottom: 3px;
 	border-top-right-radius: 25px;
@@ -166,14 +169,14 @@ span#others_text{
 
 input#save{
 	-webkit-appearance:none;
-	width: 25%;
+	width: 49%;
 	display: inline-block;
 	margin: 0;
 	padding: 15px;
 	background: none;
 	border: none;
 	color: white;
-	background-color: rgba(40,40,40,0.8);
+	background-color: #4d6c83;/*rgba(40,40,40,0.8);*/
 	-webkit-border-radius: 15px; /*For Safari, etc. */
 	-moz-border-radius: 15px; /* For Mozilla, etc. */
 	border-radius: 15px; /* CSS3 Feature */	
@@ -185,6 +188,7 @@ input#save{
 }
 
 input#save:hover{
+	opacity: 0.75;
 	cursor: pointer;
 }
 p#save_p{
@@ -231,7 +235,7 @@ div label input {
 }
 
 #ck-button input:checked + span {
-    background-color:#9c9696; 
+    background-color:#465154; 
     border-radius:25px;
     color:#fff;
 }
@@ -277,7 +281,7 @@ span#times{
 }
 
 #daily-button input:checked + span {
-    background-color:#9c9696; 
+    background-color:#465154; 
     border-radius:25px;
     color:#fff;
 }
@@ -285,4 +289,8 @@ span#times{
     cursor: pointer;
 }
 
+select {
+   background: transparent;
+
+}
 
