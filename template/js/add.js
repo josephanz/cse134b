@@ -1,7 +1,35 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
 var icons = [];
+  var images = [];
+(window.onpopstate = function() {
+  getDefaultImages();
+})();
 
+function getDefaultImages() {
+
+
+  var Images = Parse.Object.extend("Icons");
+  var query = new Parse.Query(Images);
+
+  query.find({
+    success: function(results) {
+      $(".success").show();
+      var resultLength = results.length;
+      for (var i = 0; i < resultLength; i++) {
+        var object = results[i];
+        images[i] = results[i];
+        console.log("hi" + object.get("icon"));
+      }
+
+    },
+    error: function(model, error) {
+      $(".error").show();
+    }
+  });
+}
+
+var notAnewFile = false;
 function selectImage(name) {
   //Clear all the other effects
   var arr = document.getElementsByClassName("icon");
@@ -13,6 +41,23 @@ function selectImage(name) {
   var image = document.getElementById(name);
 
   image.style.border = "3px inset #999999";
+  switch (name) {
+    case "icon1":
+      imageForIcon = images[0].get("icon");
+      notAnewFile = true;
+      break;
+    case "icon2":
+      imageForIcon = images[1].get("icon");
+      notAnewFile = true;
+      break;
+    case "newicon":
+      imageForIcon = imageRecovery;
+      notAnewFile = false;
+      break;
+
+    default:
+    imageForIcon = undefined;
+  }
 }
 
 //if(typeof(Storage) !== "undefined") {
@@ -81,34 +126,27 @@ function saveIt() {
   var title = document.getElementById("title").value;
   var time = hour + ":" + min;
 
-  if(document.getElementById("myonoffswitch").checked == false) {
+  if (document.getElementById("myonoffswitch").checked == false) {
     time = null;
   }
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
 
   //var selectedFile = document.getElementById("upload").files[0];
-  if (title == "" || title == null)
-  {
-  	alert("please put a habit name");
-  }
-  else if(!checkedWeek)
-  {
-  	alert("please select weekly frequency");
-  }
-  else if(!checkedDay)
-  {
-  	alert("please select daily frequency");
-  }
-  else
-  {
+  if (title == "" || title == null) {
+    alert("please put a habit name");
+  } else if (!checkedWeek) {
+    alert("please select weekly frequency");
+  } else if (!checkedDay) {
+    alert("please select daily frequency");
+  } else {
 
-	addHabit(title, perWeek, Number(perDay), time);
+    addHabit(title, perWeek, Number(perDay), time);
   }
 }
 
 function addHabit(title, perWeek, perDay, notificationTime) {
   var TestObject = Parse.Object.extend("Habits");
-  var testObject  = new TestObject();
+  var testObject = new TestObject();
   //if new image
   var parseImg = createImage();
 
@@ -159,16 +197,17 @@ function createImage() {
   var fileUploadControl = $("#upload")[0];
   console.log("ddeee" + fileUploadControl);
   //if (fileUploadControl.files.length > 0) {
-    var file = imageForIcon;
-    console.log("icon" + file);
-    var name = "photo.jpg";
-    var parseFile = new Parse.File(name, file);
+  var file = imageForIcon;
+  console.log("icon" + file);
+  if (notAnewFile) return file;
+  var name = "photo.jpg";
+  var parseFile = new Parse.File(name, file);
 
   return parseFile;
 }
 
 var imageForIcon; //updated in teh listner and used to craeteImage
-
+var imageRecovery;
 $(function() {
   $(":file").change(function() {
     if (this.files && this.files[0]) {
@@ -181,17 +220,28 @@ $(function() {
         reader.onload = imageIsLoaded;
         console.log("dyb dyb" + this.files[0]);
         imageForIcon = this.files[0];
+        imageRecovery = this.files[0];
         reader.readAsDataURL(this.files[0]);
       }
     }
   });
 });
 
+function insertImage(imageSrc) {
+  var iconTag = document.getElementById("inserticon");
+  var imageId = "onclick=selectImage('newicon') />";
+  iconTag.innerHTML = ' \
+                  <img id = "newicon"  class="icon" src=' + imageSrc + ' ' + imageId + ' ';
+
+}
 
 function imageIsLoaded(e) {
   $('#upload').attr('style', "visibility: visibile;");
   $('#icon4').attr('style', "visiblility: visible;");
   $('#icon4').attr('onclick', "selectImage('icon4')");
-  $('#icon4').attr('src', e.target.result);
-  $('#icon4').css({"border": "3px inset #999999"});
+  //  $('#icon4').attr('src', e.target.result);
+  insertImage(e.target.result);
+  $('#icon4').css({
+    "border": "3px inset #999999"
+  });
 };
