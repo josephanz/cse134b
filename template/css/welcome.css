@@ -26,6 +26,13 @@ i  {
 }
 
 
+#logout {
+    position: absolute;
+    top: 2vh;
+    left: 2vw;
+    color: white;
+}
+
 .welcome{
 	position: relative;
 	margin: 0 auto;
