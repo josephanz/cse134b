@@ -92,14 +92,14 @@ function signUp(email, password) {
         var dimensions = {
           error: 'email already taken'
         };
-        // Send the dimensions to Parse along with the 'search' event
+        
         Parse.Analytics.track('signupErrors', dimensions);
       }
       if(error.message.includes("invalid")){
         var dimensions = {
           error: 'invalid email format'
         };
-        // Send the dimensions to Parse along with the 'search' event
+        
         Parse.Analytics.track('signupErrors', dimensions);
       }
     }
@@ -116,6 +116,11 @@ function login(username, password) {
         errorText.innerHTML = "Error: " + error.message;
         errorText.style.display = "block";
         document.getElementById("signInMessage").value = 'Email or Password is incorrect';
+        var dimensions = {
+          error: 'incorrect credentials'
+        };
+        
+        Parse.Analytics.track('signupErrors', dimensions);
     }
   });
 }

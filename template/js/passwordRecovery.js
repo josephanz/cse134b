@@ -1,7 +1,23 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 //Parse.initialize("3zsVEcWcoiBMqwA4kFftFSJk2kTIsCYY2Hc2dXJ0", "Gp6Mdb5ydKdPiiho32LOFzs5kcwMVqW3pVosxfJy");
+
+
+
+var fields = {
+// Define ranges to bucket data points into meaningful segments
+   visited: "visited"
+};
+Parse.Analytics.track('PwRecoveryPage', fields);
+  
+
 function resetPassword() {
   var email = document.getElementById("email").value;
+
+  var userEmail = {
+      error: String(email)
+  };
+
+  
 
   Parse.User.requestPasswordReset(email, {
     success: function() {
@@ -10,7 +26,10 @@ function resetPassword() {
     },
     error: function(error) {
       // Show the error message somewhere
+      Parse.Analytics.track('PwRecoveryPage', userEmail);
       alert("Error: " + error.code + " " + error.message);
     }
   });
 }
+
+
