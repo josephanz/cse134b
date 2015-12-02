@@ -18,7 +18,7 @@ window.onerror = function(msg, url, line, col, error) {
       url: url
    };
    Parse.Analytics.track('uncaughtErrors', fields);
-
+   console.error("Error: " + msg + "\nurl: " + url + "\nline: " + line + extra);
    var suppressErrorAlert = true;
    // If you return true, then error alerts (like in older versions of 
    // Internet Explorer) will be suppressed.

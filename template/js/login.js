@@ -1,5 +1,5 @@
-
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
+//Parse.initialize("3zsVEcWcoiBMqwA4kFftFSJk2kTIsCYY2Hc2dXJ0", "Gp6Mdb5ydKdPiiho32LOFzs5kcwMVqW3pVosxfJy");
 //some useful globals
 var errorText = document.getElementById("errorMessage");
 var signUpText = document.getElementById("signInMessage");
@@ -84,10 +84,24 @@ function signUp(email, password) {
     error: function(user, error) {
       // Show the error message somewhere and let the user try again.
       //alert("Error: " + error.code + " " + error.message);
-      console.log(error.code);
+      //console.log(error.code);
       errorText.innerHTML = "Error: " + error.message;
-
       errorText.style.display = "block";
+      
+      if(error.message.includes("taken")){
+        var dimensions = {
+          error: 'email already taken'
+        };
+        
+        Parse.Analytics.track('signupErrors', dimensions);
+      }
+      if(error.message.includes("invalid")){
+        var dimensions = {
+          error: 'invalid email format'
+        };
+        
+        Parse.Analytics.track('signupErrors', dimensions);
+      }
     }
   });
 }
@@ -102,6 +116,11 @@ function login(username, password) {
         errorText.innerHTML = "Error: " + error.message;
         errorText.style.display = "block";
         document.getElementById("signInMessage").value = 'Email or Password is incorrect';
+        var dimensions = {
+          error: 'incorrect credentials'
+        };
+        
+        Parse.Analytics.track('signupErrors', dimensions);
     }
   });
 }
