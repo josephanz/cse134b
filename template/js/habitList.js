@@ -31,13 +31,6 @@ function updateField(habit, field, newValue) {
       console.log("updated field");
     }
   });
-
-  var field = {
-    user: String(Parse.User.current().id),
-    objectId: String(habit.habitId)
-  };
-
-  Parse.Analytics.track('updateHabit', field);
 }
 
 function deleteTheHabit(id) {
@@ -50,18 +43,17 @@ function deleteTheHabit(id) {
       myObj.destroy({});
       console.log("should have deleted");
       //location.reload();  //reload the page for the notification to go away
+
+      var fields = {
+        user: String(Parse.user.current().id)
+      };
+      Parse.Analytics.track('deleteHabit', fields);
     },
     error: function(object, error) {
       // The object was not retrieved successfully.
       // error is a Parse.Error with an error code and description.
     }
   });
-
-  var field = {
-    user: String(Parse.User.current().id)
-  };
-
-  Parse.Analytics.track('deleteHabit', field);
 }
 
 function getHabits() {
@@ -288,8 +280,6 @@ function sendNotification(title, notiBody, notiIcon) {
     }
   } catch(ex) {
     console.log("Site mode is not supported");
-    var field = {};
-    Parse.Analytics.track("error", field);
   }
 }
 
@@ -369,22 +359,21 @@ function makeNotifications(habitsArray) {
       var icon = habitsArray[index].iconSource;
       var Habits = Parse.Object.extend("Habits");
       var query = new Parse.Query(Habits);
+      var habitID = habitsArray[index].habitID;
       query.equalTo("user", Parse.User.current());
-      console.log("habitId " + habitsArray[index].habitId);
-      query.equalTo("objectId", habitsArray[index].habitId);
+      query.equalTo("objectId", habitID);
       index++;
       query.find({
         success: function(results) {
-          console.log("results length " + results.length);
           if(results.length != 0) {
             sendNotification(title, body, icon);
 
-            var field = {
+            var fields = {
               user: String(Parse.User.current().id),
-              objectId: String(habitsArray[index - 1].habitId)
+              habitId: habitID
             };
 
-            Parse.Analytics.track('sendNotification', field);
+            Parse.Analytics.track('sendNotification', fields);
           } else {
             console.log("dont send notification");
           }
