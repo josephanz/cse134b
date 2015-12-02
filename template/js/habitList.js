@@ -1,6 +1,5 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 
-
 function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freqSetMet, freqBest, completedDayDate, updatedFreqDate, notificationTime, freqPerWeek, parseObject) {
   this.habitId = habitId
   this.habitName = habitName;
@@ -16,21 +15,6 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
   this.freqPerWeek = freqPerWeek;
   this.parseObject = parseObject;
   console.log("Parse Object = " + parseObject);
-  this.updateField = function(field, newValue, localId) {
-    updateHabit(this.parseObject, field, newValue);
-  }
-  this.delete = function() {
-    deleteHabit(this.parseObject);
-  }
-}
-
-function updateField(habit, field, newValue) {
-  habit.set(field, newValue);
-  habit.save(null, {
-    success: function(gameScore) {
-      console.log("updated field");
-    }
-  });
 }
 
 function deleteTheHabit(id) {
@@ -45,7 +29,7 @@ function deleteTheHabit(id) {
       //location.reload();  //reload the page for the notification to go away
 
       var fields = {
-        user: String(Parse.user.current().id)
+        user: String(Parse.User.current().id)
       };
       Parse.Analytics.track('deleteHabit', fields);
     },
@@ -81,7 +65,6 @@ function getHabits() {
       if(habitsArray.length == 0) {
         window.location = "../src/welcome.html";
       }
-      console.log(habitsArray)
       displayContent(habitsArray);
       makeNotifications(habitsArray);
     },
@@ -338,7 +321,6 @@ function getTimeDiff(hour, minute, freqPerWeek) {
 
 //set time out functions for notifications
 function makeNotifications(habitsArray) {
-  console.log("makeNotifications() called");
   habitsArray.sort(compare);
   var i;
   var length = habitsArray.length;
