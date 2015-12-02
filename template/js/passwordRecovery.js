@@ -4,8 +4,8 @@ Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwy
 
 
 var fields = {
-// Define ranges to bucket data points into meaningful segments
-   visited: "visited"
+  // counts how many times a user visited the page
+  // visited: "visited"
 };
 Parse.Analytics.track('PwRecoveryPage', fields);
   
@@ -13,15 +13,18 @@ Parse.Analytics.track('PwRecoveryPage', fields);
 function resetPassword() {
   var email = document.getElementById("email").value;
 
-  var userEmail = {
-      error: String(email)
+  var valid = {
+    pwRequestSuccess: String(email)
   };
 
-  
+  var userEmail = {
+    pwRequestError: String(email)
+  };
 
   Parse.User.requestPasswordReset(email, {
     success: function() {
       alert("Password recovery email was sent to: " + email);
+      Parse.Analytics.track('PwRecoveryPage', valid);
       document.location.href = "login.html";
     },
     error: function(error) {
