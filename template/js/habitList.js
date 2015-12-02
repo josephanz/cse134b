@@ -31,6 +31,13 @@ function updateField(habit, field, newValue) {
       console.log("updated field");
     }
   });
+
+  var field = {
+    user: String(Parse.User.current().id),
+    objectId: String(habit.habitId)
+  };
+
+  Parse.Analytics.track('updateHabit', field);
 }
 
 function deleteTheHabit(id) {
@@ -49,6 +56,12 @@ function deleteTheHabit(id) {
       // error is a Parse.Error with an error code and description.
     }
   });
+
+  var field = {
+    user: String(Parse.User.current().id)
+  };
+
+  Parse.Analytics.track('deleteHabit', field);
 }
 
 function getHabits() {
@@ -275,6 +288,8 @@ function sendNotification(title, notiBody, notiIcon) {
     }
   } catch(ex) {
     console.log("Site mode is not supported");
+    var field = {};
+    Parse.Analytics.track("error", field);
   }
 }
 
@@ -363,6 +378,13 @@ function makeNotifications(habitsArray) {
           console.log("results length " + results.length);
           if(results.length != 0) {
             sendNotification(title, body, icon);
+
+            var field = {
+              user: String(Parse.User.current().id),
+              objectId: String(habitsArray[index - 1].habitId)
+            };
+
+            Parse.Analytics.track('sendNotification', field);
           } else {
             console.log("dont send notification");
           }
