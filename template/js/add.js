@@ -6,6 +6,12 @@ var images = [];
 	getDefaultImages();
 })();
 
+var fields = {
+  // counts how many times a user visited the page
+  // visited: "visited"
+};
+Parse.Analytics.track('addPage', fields);
+
 function getDefaultImages() {
 
 
