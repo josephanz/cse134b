@@ -22,21 +22,6 @@ function habit(habitId, habitName, iconSource, freqCount, freqDay, freqSet, freq
   this.freqPerWeek = freqPerWeek;
   this.parseObject = parseObject;
   console.log("Parse Object = " + parseObject);
-  this.updateField = function(field, newValue, localId) {
-    updateHabit(this.parseObject, field, newValue);
-  }
-  this.delete = function() {
-    deleteHabit(this.parseObject);
-  }
-}
-
-function updateField(habit, field, newValue) {
-  habit.set(field, newValue);
-  habit.save(null, {
-    success: function(gameScore) {
-      console.log("updated field");
-    }
-  });
 }
 
 function deleteTheHabit(id) {
@@ -49,6 +34,11 @@ function deleteTheHabit(id) {
       myObj.destroy({});
       console.log("should have deleted");
       //location.reload();  //reload the page for the notification to go away
+
+      var fields = {
+        user: String(Parse.User.current().id)
+      };
+      Parse.Analytics.track('deleteHabit', fields);
     },
     error: function(object, error) {
       // The object was not retrieved successfully.
@@ -82,7 +72,6 @@ function getHabits() {
       if(habitsArray.length == 0) {
         window.location = "../src/welcome.html";
       }
-      console.log(habitsArray)
       displayContent(habitsArray);
       makeNotifications(habitsArray);
     },
@@ -339,7 +328,6 @@ function getTimeDiff(hour, minute, freqPerWeek) {
 
 //set time out functions for notifications
 function makeNotifications(habitsArray) {
-  console.log("makeNotifications() called");
   habitsArray.sort(compare);
   var i;
   var length = habitsArray.length;
@@ -360,15 +348,21 @@ function makeNotifications(habitsArray) {
       var icon = habitsArray[index].iconSource;
       var Habits = Parse.Object.extend("Habits");
       var query = new Parse.Query(Habits);
+      var habitID = habitsArray[index].habitID;
       query.equalTo("user", Parse.User.current());
-      console.log("habitId " + habitsArray[index].habitId);
-      query.equalTo("objectId", habitsArray[index].habitId);
+      query.equalTo("objectId", habitID);
       index++;
       query.find({
         success: function(results) {
-          console.log("results length " + results.length);
           if(results.length != 0) {
             sendNotification(title, body, icon);
+
+            var fields = {
+              user: String(Parse.User.current().id),
+              habitId: habitID
+            };
+
+            Parse.Analytics.track('sendNotification', fields);
           } else {
             console.log("dont send notification");
           }
