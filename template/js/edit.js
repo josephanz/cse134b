@@ -3,8 +3,9 @@ Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwy
 
 var fields = {
   // counts how many times a user visited the page
-  // visited: "visited"
+  visited: "visited"
 };
+console.log("hi track count +1");
 Parse.Analytics.track('editPage', fields);
 
 var urlParams;

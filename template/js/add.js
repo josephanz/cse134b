@@ -8,7 +8,7 @@ var images = [];
 
 var fields = {
   // counts how many times a user visited the page
-  // visited: "visited"
+  visited: "visited"
 };
 Parse.Analytics.track('addPage', fields);
 
