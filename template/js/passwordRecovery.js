@@ -9,8 +9,6 @@ var fields = {
   // visited: "visited"
 };
 Parse.Analytics.track('PwRecoveryPage', fields);
-  
-console.log(successText);
 function resetPassword() {
   var email = document.getElementById("email").value;
 
