@@ -336,6 +336,9 @@ function makeNotifications(habitsArray) {
   for(i = 0; i < length; i++) {
     var days = habitsArray[i].freqPerWeek;
     var time = habitsArray[i].notificationTime;
+    if(time == null) {
+      continue;
+    }
     var hourMinute = time.split(":");
     var hour = Number(hourMinute[0]);
     var minute = Number(hourMinute[1]);
