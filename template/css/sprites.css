@@ -1,0 +1,22 @@
+.gains, .food, .plus-sign{
+	background: url(http://files.parsetfss.com/0faff7b2-7172-4d2e-833a-341b958758ad/tfss-31b803fa-c83a-4c3f-9609-d1d3346c3591-sprites.png) no-repeat;
+}
+
+.gains{
+	background-position: 0 0;
+	width: 80px;
+	height: 80px;
+}
+
+.food{
+	background-position: -152px 0;
+	width: 80px;
+	height: 80px;
+}
+
+.plus-sign{
+	background-position: -303px 0;
+	width: 80px;
+	height: 80px;
+}
+

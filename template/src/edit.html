@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Edit Habit</title>
 		<link rel="stylesheet" href="../css/forms.css">
+		<link rel="stylesheet" type="text/css" href="../css/sprites.css">
 		<script src="../libs/notification.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
@@ -68,13 +69,15 @@
 				<p class="titleH" id="iconupload">Habit Icon</p>
 
 
-	<!--			<img id="icon2" class="icon" onclick="selectImage('icon2');" src="../img/okay.jpg" alt="eat image"/>
-	-->			<img id="habitIcon" class="icon" onclick="selectImage('habitIcon')" src="" alt="run image"/>
-	        <a id="testme">		</a>
-				<label for="upload">
 
-				<input type="file" id="upload" accept="image/*"/>
-					<img id="icon4" class="icon" src="../img/plus-sign-128.png" alt="find a image"/>
+				<div id="icon1" class="icon gains" onclick="selectImage('icon1');" alt="the gains"></div>
+				<div id="icon2" class="icon food" onclick="selectImage('icon2');" alt="the food"></div>
+				<a id="inserticon"> </a>
+				<img id="habitIcon" class="icon" onclick="selectImage('habitIcon')" src="" alt="run image"/>
+	        	<a id="testme">		</a>
+				<label for="upload">
+					<input type="file" id="upload" accept="image/*"/>
+					<div id="icon4" class="icon plus-sign" alt="find a image"></div>
 				</label>
 
 

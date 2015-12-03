@@ -320,7 +320,7 @@ function setImageForIcon() {
 }
 
 function createImage() {
-  if (imageForIcon == undefined)
+ /* if (imageForIcon == undefined)
     return undefined;
 
   var fileUploadControl = $("#upload")[0];
@@ -331,7 +331,19 @@ function createImage() {
   var name = "photo.jpg";
   var parseFile = new Parse.File(name, file);
 
-  return parseFile;
+  return parseFile; */
+  if (imageForIcon == undefined)
+    return undefined;
+    var fileUploadControl = $("#upload")[0];
+  console.log("ddeee" + fileUploadControl);
+  //if (fileUploadControl.files.length > 0) {
+    var file = imageForIcon;
+    console.log("icon" + file);
+    if (notAnewFile) return file;
+    var name = "photo.jpg";
+    var parseFile = new Parse.File(name, file);
+
+    return parseFile;
 }
 
 var imageForIcon; //updated in teh listner and used to craeteImage
@@ -356,21 +368,69 @@ $(function() {
   });
 });
 
+var images = [];
+(window.onpopstate = function() {
+  getDefaultImages();
+})();
+
+function getDefaultImages() {
+
+
+  var Images = Parse.Object.extend("Icons");
+  var query = new Parse.Query(Images);
+
+  query.find({
+    success: function(results) {
+      $(".success").show();
+      var resultLength = results.length;
+      for (var i = 0; i < resultLength; i++) {
+        var object = results[i];
+        images[i] = results[i];
+        console.log("hi" + object.get("icon"));
+      }
+
+    },
+    error: function(model, error) {
+      $(".error").show();
+    }
+  });
+}
+var notAnewFile = false;
 function selectImage(name) {
   //Clear all the other effects
   var arr = document.getElementsByClassName("icon");
   for (var i = 0; i < arr.length; i++) {
     arr[i].style.border = "3px inset rgba(0,0,0,0)";
   }
+  console.log(arr);
   //document.getElementById('icon2').style.border = "3px inset rgba(0,0,0,0)";
   //document.getElementById('icon3').style.border = "3px inset rgba(0,0,0,0)";
   var image = document.getElementById(name);
-
+/*
   image.style.border = "3px inset #999999";
   imageForIcon = undefined;
 
   if (name === "newicon") imageForIcon = imageRecovery;
   else imageForIcon = undefined;
+*/
+  image.style.border = "3px inset #999999";
+  switch (name) {
+    case "icon1":
+    imageForIcon = images[0].get("icon");
+    notAnewFile = true;
+    break;
+    case "icon2":
+    imageForIcon = images[1].get("icon");
+    notAnewFile = true;
+    break;
+    case "newicon":
+    imageForIcon = imageRecovery;
+    notAnewFile = false;
+    break;
+
+    default:
+    imageForIcon = undefined;
+  }
 }
 function insertImage(imageSrc) {
   var iconTag = document.getElementById("testme");
