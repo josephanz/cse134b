@@ -154,7 +154,7 @@ function saveIt() {
   if (!checkedDay)
     fields.missingDayFreq = String(Parse.User.current().id);
   if (parseImg == undefined)
-    fields.missingDayFreq = String(Parse.User.current().id);
+    fields.missingImg = String(Parse.User.current().id);
   //send results to parse Analytics
   if (isNotEmpty(fields)) {
     Parse.Analytics.track('AddHabitError', fields);

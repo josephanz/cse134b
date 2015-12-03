@@ -209,6 +209,12 @@ function saveIt() {
       perWeek[i] = false;
     }
     console.log(perWeek[i]);
+
+  var update = {
+    updated: Parse.User.current().id
+  }
+  Parse.Analytics.track('editPageError', update);
+
   }
 
   var daily = document.getElementsByName("day");
@@ -246,6 +252,20 @@ function saveIt() {
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
 
   //var selectedFile = document.getElementById("upload").files[0];
+  var fields = {};
+  if (title === "" || title === null)
+    fields.missingTitle = String(Parse.User.current().id);
+  if (!checkedWeek)
+    fields.missingWeeklyFreq = String(Parse.User.current().id);
+  if (!checkedDay)
+    fields.missingDayFreq = String(Parse.User.current().id);
+  // if (parseImg == undefined)
+  //   fields.missingImg = String(Parse.User.current().id);
+  //send results to parse Analytics
+  if (isNotEmpty(fields)) {
+    Parse.Analytics.track('editPageError', fields);
+  }
+
   if (title == "" || title == null) {
     alert("please put a habit name");
   } else if (!checkedWeek) {
@@ -257,6 +277,16 @@ function saveIt() {
     addHabit(getHabitId(), title, perWeek, Number(perDay), time);
   }
 }
+
+function isNotEmpty(obj) {
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop))
+      return true;
+  }
+
+  return false;
+}
+
 function isPerWeekFreqChanged(oldFreqPerWeek, newFreqPerWeek) {
   var arrayLength = oldFreqPerWeek.length;
   for (var i = 0; i < arrayLength; i++) {
@@ -265,6 +295,7 @@ function isPerWeekFreqChanged(oldFreqPerWeek, newFreqPerWeek) {
   }
   return false;
 }
+
 function addHabit(habitId, title, perWeek, perDay, notificationTime) {
   var TestObject = Parse.Object.extend("Habits");
   var testObject = new TestObject();
