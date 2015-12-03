@@ -37,6 +37,13 @@ h2 span {
     font-color: solid white;
 }
 
+#logout {
+    position: absolute;
+    top: 2vh;
+    left: 2vw;
+    color: white;
+}
+
 .login {
 	position: relative;
 	margin: 0 auto;
