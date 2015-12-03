@@ -1,5 +1,13 @@
 Parse.initialize("M0a7TBns2wo7HMdoULhac86LMnpjPothTzst4a1T", "cV4npfDqaSpeTLSwwyhYxg8CvoWqJc0QjXlM37c0");
 //Parse.initialize("3zsVEcWcoiBMqwA4kFftFSJk2kTIsCYY2Hc2dXJ0", "Gp6Mdb5ydKdPiiho32LOFzs5kcwMVqW3pVosxfJy");
+
+var fields = {
+  // counts how many times a user visited the page
+  visited: Parse.User.current().id
+};
+console.log("hi track count +1");
+Parse.Analytics.track('editPage', fields);
+
 var urlParams;
 (window.onpopstate = function() {
   var match,
@@ -201,6 +209,12 @@ function saveIt() {
       perWeek[i] = false;
     }
     console.log(perWeek[i]);
+
+  var update = {
+    updated: Parse.User.current().id
+  }
+  Parse.Analytics.track('editPageError', update);
+
   }
 
   var daily = document.getElementsByName("day");
@@ -238,6 +252,20 @@ function saveIt() {
   console.log(title + " p: " + perWeek + " D: " + perDay + " t " + time);;
 
   //var selectedFile = document.getElementById("upload").files[0];
+  var fields = {};
+  if (title === "" || title === null)
+    fields.missingTitle = String(Parse.User.current().id);
+  if (!checkedWeek)
+    fields.missingWeeklyFreq = String(Parse.User.current().id);
+  if (!checkedDay)
+    fields.missingDayFreq = String(Parse.User.current().id);
+  // if (parseImg == undefined)
+  //   fields.missingImg = String(Parse.User.current().id);
+  //send results to parse Analytics
+  if (isNotEmpty(fields)) {
+    Parse.Analytics.track('editPageError', fields);
+  }
+
   if (title == "" || title == null) {
     alert("please put a habit name");
   } else if (!checkedWeek) {
@@ -249,6 +277,16 @@ function saveIt() {
     addHabit(getHabitId(), title, perWeek, Number(perDay), time);
   }
 }
+
+function isNotEmpty(obj) {
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop))
+      return true;
+  }
+
+  return false;
+}
+
 function isPerWeekFreqChanged(oldFreqPerWeek, newFreqPerWeek) {
   var arrayLength = oldFreqPerWeek.length;
   for (var i = 0; i < arrayLength; i++) {
@@ -257,6 +295,7 @@ function isPerWeekFreqChanged(oldFreqPerWeek, newFreqPerWeek) {
   }
   return false;
 }
+
 function addHabit(habitId, title, perWeek, perDay, notificationTime) {
   var TestObject = Parse.Object.extend("Habits");
   var testObject = new TestObject();
