@@ -12,6 +12,18 @@ Homework 5:
 
 	hosted website link:
 
+	Data being tracked:
+		page visits
+		sentNotifications
+		add habit
+		update habit
+		delete habit
+
+		uncaught exceptions
+		sign up errors
+		add/edit form error
+
+	To view the data go to Parse.com and go to the Anayltics tab.  Click on Events in the side bar on the left.  Click on the drop down menu (API requests) above the graph.  Scroll to the bottom and click on custom breakdown. A side bar should appear on the left with options to view the data and some filters that can be applied
 
 	Image Spriting:
 		For the add and edit page, we have default images that the user can select from to put an icon for their habit. These images are all spritied together. 
@@ -33,7 +45,7 @@ Homework 5:
 		username: snackoverflow1@gmail.com
 		password: snackattack
 
-	Packages (dropbox link - ):
+	Packages (dropbox link - https://www.dropbox.com/sh/o68z32lflty9pvz/AAC94l-ZTHfw3OVkYtfLwfOVa?dl=0):
 		Android:
 			We packaged our web app into an android app(.apk), found in the "template/platforms/" directory along with a few screenshots. The android app currently has log-in issues with Parse, because we are using the JavaScript API key instead of the Android API key to access the database. We have provided screenshots of using the Phonegap developer application to connect to the server we hosted our app on as proof of concept. 
 
@@ -49,14 +61,13 @@ Homework 5:
 		Our web app is packaged as an android application, mac application, window application, and linux application.  These can be found in the platform directory inside the zip or github.  We were not able to create an ios application because we did not have an Apple developer's key. However, we do have screenshots when using the Phonegap application to display our webapp on ios for a poc. The android application currently does not work with Parse, this is because we are using the javascript api instead of an android api.  Similarly, we have screenshots of the android application using the phonegap application on an android device.
 
 	Issues:
-		Notifications do not work properly when they are packaged for other platforms.  On Internet Explorer, the web app has to be hosted on a server for the Internet Explorer's pinned sites to work.  
+		Notifications do not work properly when they are packaged for other platforms.  
 
+		On Internet Explorer, the web app has to be hosted on a server for the Internet Explorer's pinned sites to work.  
 
-		Some issues we encountered were
+		The intended use of the icon image upload is: our application gives the user two default icons and the option for the user to upload his or her own image. The uploaded image overwrites the previously user-uploaded image if one exists.  
 
-			The intended use of the icon image upload is: our application gives the user two default icons and the option for the user to upload his or her own image. The uploaded image overwrites the previously user-uploaded image if one exists.  
-
-			If you select one of our default images, and then go to edit. In the image selection, it would show that image selected twice. One refers to the original image, the other refers to what is currently selected. 
+		If you select one of our default images, and then go to edit. In the image selection, it would show that image selected twice. One refers to the original image, the other refers to what is currently selected. 
 
 Homework 4:
 	Work Done:
