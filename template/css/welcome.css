@@ -140,5 +140,7 @@ p#add{
 	opacity: 0.75;
 	cursor: pointer;
 }
-.welcome .addbutton:click
+.welcome .addbutton:click{
+  
+}
 
