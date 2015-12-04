@@ -329,6 +329,7 @@ function getTimeDiff(hour, minute, freqPerWeek) {
 
 //set time out functions for notifications
 function makeNotifications(habitsArray) {
+  console.log("makeNotifications() called");
   habitsArray.sort(compare);
   var i;
   var length = habitsArray.length;
@@ -336,9 +337,6 @@ function makeNotifications(habitsArray) {
   for(i = 0; i < length; i++) {
     var days = habitsArray[i].freqPerWeek;
     var time = habitsArray[i].notificationTime;
-    if(time == null) {
-      continue;
-    }
     var hourMinute = time.split(":");
     var hour = Number(hourMinute[0]);
     var minute = Number(hourMinute[1]);
@@ -352,18 +350,20 @@ function makeNotifications(habitsArray) {
       var icon = habitsArray[index].iconSource;
       var Habits = Parse.Object.extend("Habits");
       var query = new Parse.Query(Habits);
-      var habitID = habitsArray[index].habitID;
+            var habitID = habitsArray[index].habitID;
       query.equalTo("user", Parse.User.current());
-      query.equalTo("objectId", habitID);
+      console.log("habitId " + habitsArray[index].habitId);
+      query.equalTo("objectId", habitsArray[index].habitId);
       index++;
       query.find({
         success: function(results) {
+          console.log("results length " + results.length);
           if(results.length != 0) {
             sendNotification(title, body, icon);
 
             var fields = {
               user: String(Parse.User.current().id),
-              habitId: habitID
+              habitId: String(habitID)
             };
 
             Parse.Analytics.track('sendNotification', fields);
