@@ -392,10 +392,15 @@ $(function() {
     if (this.files && this.files[0]) {
       var reader = new FileReader();
       var size = document.getElementById('upload').files[0].size;
+      var filetype = document.getElementById('upload').files[0].type;
       if (size > 1024 * 2000) {
-        document.getElementById("iconupload").style.color = "red";
-        document.getElementById("iconupload").innerHTML = "Habit Icon: file size must not exceed 2mb, size is " + size + " bytes";
-      } else {
+        document.getElementById("iconerror").innerHTML = "Habit icon file size must not exceed 2mb, size is " + size + " bytes";
+      } 
+      else if(filetype.substring(0,6) != "image/"){
+        document.getElementById("iconerror").innerHTML = "Habit icon must be an image file (jpeg, png, bmp, gif, etc.)";
+      }
+      else {
+        document.getElementById("iconerror").innerHTML = "";
         reader.onload = imageIsLoaded;
         console.log("dyb dyb" + this.files[0]);
         imageForIcon = this.files[0];
