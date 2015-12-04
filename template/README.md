@@ -69,7 +69,7 @@ Homework 5:
 		Windows:
 			Windows executable packaged using electron. No issues encountered. 
 
-		Our web app is packaged as an android application, mac application, window application, and linux application.  These can be found in the platform directory inside the zip or github.  We were not able to create an ios application because we did not have an Apple developer's key. However, we do have screenshots when using the Phonegap application to display our webapp on ios for a poc. The android application currently does not work with Parse, this is because we are using the javascript api instead of an android api.  Similarly, we have screenshots of the android application using the phonegap application on an android device.
+		Our web app is packaged as an android application, mac application, window application, and linux application.  We were not able to create an ios application because we did not have an Apple developer's key. However, we do have screenshots when using the Phonegap application to display our webapp on ios for a poc. The android application currently does not work with Parse, this is because we are using the javascript api instead of an android api.  Similarly, we have screenshots of the android application using the phonegap application on an android device.
 
 	Issues:
 		Notifications do not work properly when they are packaged for other platforms.  
