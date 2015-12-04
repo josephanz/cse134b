@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+		<title>Add/Edit Page</title>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<style type="text/css">
+			html {
+				background: url(images/white_background.jpg) no-repeat center center fixed; 
+			 	-webkit-background-size: cover;
+			  	-moz-background-size: cover;
+			  	-o-background-size: cover;
+			 	background-size: cover;
+				padding: 10% 20% 10% 20%;
+			}
+			body {
+				background-color: transparent;
+			}
+			h2 {
+				text-align: center;
+				font-family: 'Brush Script MT', cursive;
+				font-size: 48px;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: 500;
+				line-height: 26.4px;
+				text-align: center;
+				color: #444444;
+			}
+			label > input { /* HIDE RADIO */
+  				visibility: hidden; /* Makes input not-clickable */
+			}
+			label > input + img { /* IMAGE STYLES */
+				display:block;
+  				border: 2px solid transparent;
+  				width: 100px;
+  				height: 100px;
+  				border-radius: 50%;
+			}
+			label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  				border: 2px solid #000;
+			}
+			input + span {
+    			display: inline-block;
+       			background-color: #999;
+    			margin: 30%;
+    			width: 30px;
+    			height: 30px;
+    			text-align: center;
+    			line-height: 2em;
+    			vertical-align: middle;
+			}
+			input[type="radio"] + span {
+    			border-radius: 50%;
+			}
+			:checked + span {
+    			display: inline-block;    
+    			border: 2px solid #000;
+			}
+			input[type="submit"] {
+				display: inline-block;
+				width:75%;
+				height:50px;
+			}
+			#image_upload {
+				display: inline-block;
+				width: 100px;
+				height: 100px;
+			}
+			#submit_wrapper {
+				text-align: center;
+			}
+			#container {
+				text-align: left;
+			  	background-color: transparent;
+			}
+			#scroll {
+				overflow-x:scroll; 
+				overflow-y:hidden; 
+				white-space: nowrap;
+			}
+		</style>
+		<script>
+			function back() {
+				window.location.assign("habit_list.html");
+			}
+		</script>
+	</head>
+	<body>
+		<div id="container">
+			<button type="button" class="btn btn-default" style="float:left" id="close_button">
+				<span class="glyphicon glyphicon-remove-sign"></span> 
+			</button><br>
+	    	<h2>Add a habit</h2>
+			<form onsubmit="back(); return false;">
+				<div>
+					<label>Habit Title:</label><br>
+					<input id="habit_name" type="text"><br>
+				</div><br>
+				<label>Icon:</label><br>
+				<div id="scroll">
+					<label id="image_upload">
+						<input type="file"/>
+						<img src="images/add_image_button.png" alt="add"/>
+					</label>
+					<label>
+						<input type="radio" name="icon"/>
+						<img src="images/piggybank.jpg" alt="Save money"/>
+					</label>
+					<label>
+						<input type="radio" name="icon"/>
+						<img src="images/numbers.jpg" alt="Taxes"/>
+					</label>
+						<label>
+						<input type="radio" name="icon"/>
+						<img src="images/gains.png" alt="Gains"/>
+					</label>
+					<label>
+						<input type="radio" name="icon"/>
+						<img src="images/food.png" alt="Eat healthy"/>
+					</label>
+						<label>
+						<input type="radio" name="icon"/>
+						<img src="images/reading.jpg" alt="Reading"/>
+					</label>
+					<label>
+						<input type="radio" name="icon"/>
+						<img src="images/meditate.png" alt="Meditate"/>
+					</label>
+				</div><br>
+				<label>Frequency:</label><br>
+				<div>
+					<label><input type="checkbox" value="Su"/><span>Su</span></label>
+					<label><input type="checkbox" value="M"/><span>M</span></label>
+					<label><input type="checkbox" value="T"/><span>T</span></label>
+					<label><input type="checkbox" value="W"/><span>W</span></label>
+					<label><input type="checkbox" value="T"/><span>Th</span></label>
+					<label><input type="checkbox" value="F"/><span>F</span></label>
+					<label><input type="checkbox" value="S"/><span>S</span></label>
+				</div><br>
+				<div>
+					<label><input type="radio" value="1" name="time_per_day"/><span>1</span></label>
+					<label><input type="radio" value="2" name="time_per_day"/><span>2</span></label>
+					<label><input type="radio" value="3" name="time_per_day"/><span>3</span></label>
+					<label style="float:center; margin:20px;">Times per day</label>
+				</div><br>
+				<div id="submit_wrapper">
+					<input type="submit" value="Save it"/>
+				</div>
+			</form>
+		</div>
+		<script>
+			$("button").click(function() {
+				btnId = $(this).attr("id");
+				if(btnId === "close_button") {
+					window.location.assign("habit_list.html");
+				}
+			})
+		</script>
+	</body>
+</html>
