@@ -11,7 +11,7 @@ Homework 5:
 	We also used RollBar as another way to track errors and Google Anaylytics for more detailed usage data.
 
 	hosted website link: http://josephanz.github.io/cse134b/template/destination/src/login
-
+	github: https://github.com/josephanz/cse134b
 	Data being tracked:
 		page visits
 		sentNotifications
