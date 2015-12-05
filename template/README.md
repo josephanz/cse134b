@@ -19,9 +19,20 @@ Homework 5:
 		update habit
 		delete habit
 
+
 		uncaught exceptions
 		sign up errors
-		add/edit form error
+			- email already belongs to an existing account
+			- invalid email format (missing @ or .com/.net/etc)
+		add/edit form errors
+			- missing title
+			- missing weekly freq
+			- missing image
+		invalid login credentials 
+			- bad username/password
+		invalid email recovery request
+			- email does not exist in database (no pw associated with email)
+
 
 	To view the data go to Parse.com and go to the Anayltics tab.  Click on Events in the side bar on the left.  Click on the drop down menu (API requests) above the graph.  Scroll to the bottom and click on custom breakdown. A side bar should appear on the left with options to view the data and some filters that can be applied
 
